@@ -19,6 +19,9 @@
 @endsection
 @section("main_content")
     <div class="main_content_iner ">
+        @if(session('success'))
+
+        @endif
         <div class="container-fluid p-0">
             <div class="row justify-content-center">
                 <div class="col-lg-12">
@@ -85,14 +88,13 @@
 
                                             </td>
                                             <td>
-                                                <a data-url=""
-                                                   href="{{ route("product.remove" , ['id' => $product->id]) }}"  class="far fa-trash-alt"></a>
+                                                <a data-url="{{ route("product.remove" , ['id' => $product->id]) }}"
+                                                  href="" class="far fa-trash-alt"></a>
                                                 <a href="{{ route("product.edit" , ['id' => $product->id]) }}"
                                                    class="far fa-edit"></a>
                                             </td>
                                         </tr>
                                         @endforeach
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -107,3 +109,43 @@
         </div>
     </div>
     @endsection
+@section("append_js")
+    <script>
+        function removeProduct(e) {
+            e.preventDefault();
+            let urlRequest = $(this).data('url');
+            let that = $(this);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "GET",
+                        url: urlRequest,
+                        success : function (data) {
+                            if (data.code == 200) {
+                                that.parent().parent().remove();
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
+                                )
+                            }
+                        } ,
+                        error : function () {
+                        }
+                    })
+                }
+            })
+        }
+        $(function () {
+            $(document).on('click', '.fa-trash-alt', removeProduct)
+        })
+    </script>
+@endsection

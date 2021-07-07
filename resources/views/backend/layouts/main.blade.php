@@ -48,6 +48,7 @@
     <!-- style CSS -->
     <link rel="stylesheet" href=" {{ asset("/backend-access/css/style.css") }}" />
     <link rel="stylesheet" href="{{ asset("/backend-access/css/colors/default.css") }}" id="colorSkinCSS">
+    <link rel="stylesheet" href="{{ asset("/backend-access/js/select2/select2.min.css") }}">
     <style>
         @yield('css')
     </style>

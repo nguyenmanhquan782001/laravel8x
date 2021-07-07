@@ -136,16 +136,11 @@
                                     'Your file has been deleted.',
                                     'success'
                                 )
-
                             }
-
                         } ,
                         error : function () {
-
                         }
-
                     })
-
                 }
             })
         }

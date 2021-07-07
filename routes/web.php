@@ -49,9 +49,14 @@ Route::prefix('/admin')->middleware('can_open_admin')->group(function($router) {
     // Start Order
     $router->get("/orders", [OrderController::class , 'index'])->name("order.index");
     $router->get("/orders/create", [OrderController::class , 'create'])->name("order.create");
-
-
+    $router->post("/orders/store" , [OrderController::class , 'store'])->name("order.store");
     // End Order
+
+    // Start Ajax Order
+    $router->post("/orders/searchProduct", [OrderController::class , 'singleProduct'])->name("search");
+    $router->post("/order/ajaxAddProduct" , [OrderController::class , 'ajaxAddProduct'])->name("ajaxAdd");
+    // End Ajax Order
+
 
 });
 // Start Errors

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Backend\CategoryModel;
 use App\Models\Backend\GalleryModel ;
 
+
 class ProductModel extends Model
 {
     use HasFactory;
@@ -24,4 +25,6 @@ class ProductModel extends Model
     public  function  gallery() {
         return $this->hasMany(GalleryModel::class , 'product_id');
     }
+
+
 }

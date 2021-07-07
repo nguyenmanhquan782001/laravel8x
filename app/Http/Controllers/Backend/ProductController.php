@@ -135,11 +135,11 @@ class ProductController extends Controller
                     }
                 }
                 DB::commit();
-                return redirect()->route('product.index');
+                return redirect()->route('product.index')->with("success" , "Thêm mới sản phẩm thành công");
             }
         } catch (\Exception $exception) {
             DB::rollBack();
-            dd($exception);
+
             return redirect()->route('404');
         }
     }
@@ -192,7 +192,6 @@ class ProductController extends Controller
                 $product_image = $data['file_path'];
                 $image_name = $data['file_name'];
             }
-
             $product = $this->productModel->find($id);
             $product->product_name = $product_name;
             $product->product_price = $product_price;
@@ -231,13 +230,11 @@ class ProductController extends Controller
             }
             $product->save();
             DB::commit();
-            return redirect()->route("product.index");
+            return redirect()->route("product.index")->with("success" , "Sửa sản phẩm xong");
         }catch (\Exception $exception) {
             echo  $exception;
             return  false ;
         }
-
-
     }
 
     public function remove($id)
@@ -255,11 +252,13 @@ class ProductController extends Controller
                 $delete_item = str_replace("/storage", '/public', $item->image_path);
                 Storage::delete($delete_item);
             }
-
         }
         $product_image->delete();
         $product->delete();
-        return redirect()->route('product.index');
+        return response()->json([
+            'code' => '200',
+            'message' => 'success'
+        ] ,200);
 
     }
 }

@@ -70,3 +70,5 @@
 <script src="{{ asset("/backend-access/js/custom.js") }}"></script>
 {{--<script src="{{ asset('backend-access/js/sweetalert2.min.js') }}"></script>--}}
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{{--select2--}}
+<script src="{{ asset("backend-access/js/select2/select2.full.min.js") }}"></script>
