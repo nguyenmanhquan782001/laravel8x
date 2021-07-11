@@ -41,7 +41,7 @@
                             </div>
                             <div class="white_card_body">
                                 <div class="form-group mb-0">
-                                    <input value="{{ old("customer_email" , " ") }}" type="text" class="form-control" name="customer_email"
+                                    <input value="{{ old("customer_email" , "") }}" type="text" class="form-control" name="customer_email"
                                            id="inputText" placeholder="Email khách hàng....">
                                 </div>
                                 <br>

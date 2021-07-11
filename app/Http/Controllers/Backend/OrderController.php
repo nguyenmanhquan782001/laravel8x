@@ -26,17 +26,14 @@ class OrderController extends Controller
 
     public function index()
     {
-        return view("backend.orders.index");
+        $orders = $this->orderModel->all();
+
+        return view("backend.orders.index" , compact('orders'));
     }
 
     public function create()
     {
         return view("backend.orders.create");
-    }
-
-    public function searchProduct()
-    {
-
     }
 
     public function singleProduct(Request $request)
@@ -118,14 +115,12 @@ class OrderController extends Controller
 
             foreach ($products as $key_id => $value) {
                 $quantity = $quantities[$key_id];
-
                 $product = $this->productModel->find($value);
                 $totalPrice = $quantity * $product->product_price;
                 $order->total_product += $quantity;
                 $order->total_price += $totalPrice;
                 $order->save();
             }
-
 
             foreach ($products as $key_id => $val) {
                 $quantity = $quantities[$key_id];
@@ -141,11 +136,15 @@ class OrderController extends Controller
             }
             DB::commit();
             return redirect()->route("order.index");
-
         } catch (\Exception $exception) {
-
             DB::rollBack();
+            return redirect()->route("404");
         }
+
+    }
+    public  function  edit($id) {
+        $order = $this->orderModel->find($id) ;
+        return view("backend.orders.edit" , compact('order')) ;
 
     }
 }

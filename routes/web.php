@@ -23,6 +23,9 @@ use App\Http\Controllers\Frontend\HomePageController;
 |
 */
 
+Route::group(['prefix' => 'laravel-filemanager'], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
 
 Route::prefix('/admin')->middleware('can_open_admin')->group(function($router) {
     // dashboard
@@ -50,6 +53,9 @@ Route::prefix('/admin')->middleware('can_open_admin')->group(function($router) {
     $router->get("/orders", [OrderController::class , 'index'])->name("order.index");
     $router->get("/orders/create", [OrderController::class , 'create'])->name("order.create");
     $router->post("/orders/store" , [OrderController::class , 'store'])->name("order.store");
+    $router->get("/orders/edit/{id}" , [OrderController::class, 'edit'])->name("order.edit");
+    $router->post("/orders/update/{id}" , [OrderController::class , 'update'])->name('order.update');
+
     // End Order
 
     // Start Ajax Order

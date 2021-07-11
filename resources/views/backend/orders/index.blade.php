@@ -1,5 +1,22 @@
 @extends("backend.layouts.main")
 @section('title', 'Đơn hàng')
+@section('css')
+    .far {
+    font-size: 25px;
+    }
+    .fa-trash-alt {
+    color: red;
+    }
+    .fa-edit {
+    color: yellowgreen;
+    margin-left: 5px;
+    }
+    .far:hover {
+    color: #f1b0b7;
+
+    }
+
+@endsection
 @section("main_content")
     <div class="main_content_iner ">
         <div class="container-fluid p-0">
@@ -24,12 +41,13 @@
                                                     <div class="search_field">
                                                         <input type="text" placeholder="Search content here...">
                                                     </div>
-                                                    <button type="submit"> <i class="ti-search"></i> </button>
+                                                    <button type="submit"><i class="ti-search"></i></button>
                                                 </form>
                                             </div>
                                         </div>
                                         <div class="add_button ml-10">
-                                            <a href="{{ route("order.create") }}"  data-target="#addcategory" class="btn_1">Add New</a>
+                                            <a href="{{ route("order.create") }}" data-target="#addcategory"
+                                               class="btn_1">Add New</a>
                                         </div>
                                     </div>
                                 </div>
@@ -39,25 +57,56 @@
                                     <table class="table lms_table_active ">
                                         <thead>
                                         <tr>
-                                            <th scope="col">title</th>
-                                            <th scope="col">Category</th>
-                                            <th scope="col">Teacher</th>
-                                            <th scope="col">Lesson</th>
-                                            <th scope="col">Enrolled</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Status</th>
+                                            <th scope="col">STT</th>
+                                            <th scope="col">Tên khách</th>
+                                            <th scope="col">SDT</th>
+                                            <th scope="col">Tổng SP</th>
+                                            <th scope="col">Tổng tiền</th>
+                                            <th scope="col">Địa chỉ</th>
+                                            <th scope="col">Trạng thái đơn</th>
+
+                                            <th scope="col">Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <th scope="row"> <a href="#" class="question_content"> title here 1</a></th>
-                                            <td>Category name</td>
-                                            <td>Teacher James</td>
-                                            <td>Lessons name</td>
-                                            <td>16</td>
-                                            <td>$25.00</td>
-                                            <td><a href="#" class="status_btn">Active</a></td>
-                                        </tr>
+                                        @foreach($orders as $order)
+                                            <tr>
+                                                <th scope="row"><a href="#"
+                                                                   class="question_content">{{ $loop->index + 1 }}</a>
+                                                </th>
+                                                <td>{{ $order->customer_name }}</td>
+                                                <td>{{ $order->customer_phone }}</td>
+
+                                                <td>{{ $order->total_product}}</td>
+                                                <td>{{ $order->total_price }}</td>
+                                                <td>{{ $order->customer_address }}</td>
+
+                                                @if($order->order_status === 1)
+                                                    <td><a style="background-color: yellow" href="#" class="status_btn">Waitting</a>
+                                                    </td>
+                                                @elseif($order->order_status == 2)
+                                                    <td><a style="background-color: red" href="#" class="status_btn">Waitted</a>
+                                                    </td>
+                                                @elseif($order->order_status == 3)
+                                                    <td><a href="#" class="status_btn">Transporting</a></td>
+                                                @elseif($order->order_status == 4)
+                                                    <td><a style="background-color: blue" href="#" class="status_btn">Completed</a>
+                                                    </td>
+                                                @elseif($order->order_status == 5)
+                                                    <td><a style="background-color: blueviolet" href="#"
+                                                           class="status_btn">Hủy đơn</a></td>
+                                                @elseif($order->order_status == 6)
+                                                    <td><a style="background-color: brown" href="#" class="status_btn">Hoàn
+                                                            iền</a></td>
+                                                @endif
+                                                <td>
+                                                    <a data-url=""
+                                                       href="" class="far fa-trash-alt"></a>
+                                                    <a href="{{ route("order.edit" , ['id' => $order->id]) }}"
+                                                       class="far fa-edit"></a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
 
                                         </tbody>
                                     </table>

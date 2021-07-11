@@ -117,7 +117,7 @@
 
             Swal.fire({
                 title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                text: "Bạn chắc chắn muốn xóa danh mục này chứ!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -139,12 +139,18 @@
                             }
                         } ,
                         error : function () {
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Nguy hiểm',
+                                text: 'Không thể xóa danh mục này',
+                                footer: '<a href="">Hello anh em</a>'
+                            })
                         }
                     })
                 }
             })
         }
-
         $(function () {
             $(document).on('click', '.fa-trash-alt', removeData)
         })
