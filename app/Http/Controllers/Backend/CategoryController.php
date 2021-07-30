@@ -75,7 +75,7 @@ class CategoryController extends Controller
             if ($validator->fails()) {
                 return redirect()->back()->withInput()->withErrors($validator);
             } else {
-                $category = $this->categoryModel;
+                $category = new  CategoryModel();
                 $category->category_name = $category_name;
                 $category->slug = $slug;
                 if ($request->input('status') === "on") {
@@ -91,6 +91,7 @@ class CategoryController extends Controller
 
             }
         } catch (\Exception $exception) {
+            dd($exception);
             DB::rollBack();
             return redirect()->route('404');
         }
@@ -118,7 +119,6 @@ class CategoryController extends Controller
             $ruler = [
                 'category_name' => "required|unique:category,category_name,$id,id",
                 'slug' => 'required',
-
             ];
             $message = [
                 'category_name.required' => 'Không được để trống tên danh mục',
@@ -128,12 +128,14 @@ class CategoryController extends Controller
             $validator = Validator::make($request->all(), $ruler, $message);
             $category_name = $request->input('category_name', '');
             $slug = $request->input('slug', '');
+            $parent_id = $request->input('parent_id', 0);
             if ($validator->fails()) {
                 return redirect()->back()->withInput()->withErrors($validator);
             } else {
                 $category = $this->categoryModel->find($id);
                 $category->category_name = $category_name;
                 $category->slug = $slug;
+                $category->parent_id = $parent_id ;
                 if ($request->input('status') === "on") {
                     $category->status = 1;
 

@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Diana – Furniture Store eCommerce Bootstrap5 Template</title>
+    <title>@yield("title" , "Trang chủ")</title>
 
     <!--== Favicon ==-->
     <link rel="shortcut icon" href="{{ asset("frontend-access/") }}assets/img/favicon.ico" type="image/x-icon" />

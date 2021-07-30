@@ -28,7 +28,7 @@ class OrderController extends Controller
     {
         $orders = $this->orderModel->all();
 
-        return view("backend.orders.index" , compact('orders'));
+        return view("backend.orders.index", compact('orders'));
     }
 
     public function create()
@@ -142,10 +142,26 @@ class OrderController extends Controller
         }
 
     }
-    public  function  edit($id) {
-        $order = $this->orderModel->find($id) ;
-        return view("backend.orders.edit" , compact('order')) ;
 
+    public function edit($id)
+    {
+        $order = $this->orderModel->find($id);
+        return view("backend.orders.edit", compact('order'));
+    }
+
+    public function update(Request $request)
+    {
+
+    }
+
+    public function delete($id)
+    {
+        $order = OrderModel::find($id) ;
+        $order->delete();
+        return response()->json([
+            'code' => 200 ,
+            'message' => 'success'
+        ] , 200);
     }
 }
 

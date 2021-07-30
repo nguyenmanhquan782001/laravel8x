@@ -27,17 +27,13 @@
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="featured-tab" data-bs-toggle="tab"
                                             data-bs-target="#featured" type="button" role="tab" aria-controls="featured"
-                                            aria-selected="true">Featured
+                                            aria-selected="true">Tất cả sản phẩm
                                     </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="chair-tab" data-bs-toggle="tab" data-bs-target="#chair"
-                                            type="button" role="tab" aria-controls="chair" aria-selected="false">Chair
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="sofa-tab" data-bs-toggle="tab" data-bs-target="#sofa"
-                                            type="button" role="tab" aria-controls="sofa" aria-selected="false">Sofa
+                                            type="button" role="tab" aria-controls="chair" aria-selected="false">Sản
+                                        phẩm mới nhất
                                     </button>
                                 </li>
                             </ul>
@@ -47,560 +43,67 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div
-                                                class="swiper-container swiper-nav swiper-slide-gap product-swiper-pagination product-slider-container">
+                                                class="swiper-container swiper-nav swiper-slide-gap product-slider-container">
                                                 <div class="swiper-wrapper">
-                                                    <div class="swiper-slide">
-                                                        <!--== Start Shop Item ==-->
-                                                        <div class="product-item">
-                                                            <div class="inner-content">
-                                                                <div class="product-thumb">
-                                                                    <a href="shop-single.html">
-                                                                        <img class="w-100"
-                                                                             src="{{ asset("frontend-access/") }}/assets/img/shop/1.jpg"
-                                                                             alt="Image-HasTech">
-                                                                    </a>
-                                                                    <div class="product-action">
-                                                                        <div class="addto-wrap">
-                                                                            <a class="add-cart" href="shop-cart.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-shopping-cart"></i>
-                                          <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-wishlist"
-                                                                               href="wishlist.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-wishlist"></i>
-                                          <i class="hover-icon bardy bardy-wishlist"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-quick-view"
-                                                                               href="javascript:void(0);">
-                                        <span class="icon">
-                                          <i class="bardy bardy-quick-view"></i>
-                                          <i class="hover-icon bardy bardy-quick-view"></i>
-                                        </span>
-                                                                            </a>
+                                                    @foreach($products1 as $product)
+                                                        <div class="swiper-slide">
+                                                            <div class="product-item">
+                                                                <div class="inner-content">
+                                                                    <div class="product-thumb">
+                                                                        <a href="shop-single.html">
+                                                                            <img class="w-100"
+                                                                                 src="{{ asset("$product->product_image") }}"
+                                                                                 alt="Image-HasTech">
+                                                                        </a>
+                                                                        <div class="product-action">
+                                                                            <div class="addto-wrap">
+                                                                                <a class="add-cart"
+                                                                                   href="shop-cart.html">
+                              <span class="icon">
+                                <i class="bardy bardy-shopping-cart"></i>
+                                <i class="hover-icon bardy bardy-shopping-cart"></i>
+                              </span>
+                                                                                </a>
+                                                                                <a class="add-wishlist"
+                                                                                   href="wishlist.html">
+                              <span class="icon">
+                                <i class="bardy bardy-wishlist"></i>
+                                <i class="hover-icon bardy bardy-wishlist"></i>
+                              </span>
+                                                                                </a>
+                                                                                <a class="add-quick-view"
+                                                                                   href="javascript:void(0);">
+                              <span class="icon">
+                                <i class="bardy bardy-quick-view"></i>
+                                <i class="hover-icon bardy bardy-quick-view"></i>
+                              </span>
+                                                                                </a>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="product-desc">
-                                                                    <div class="product-info">
-                                                                        <h4 class="title"><a href="shop-single.html">1.
-                                                                                New and sale badge product</a></h4>
-                                                                        <div class="star-content">
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                        </div>
-                                                                        <div class="prices">
-                                                                            <span class="price">Tk 110.00 </span>
-                                                                            <span class="price-old">Tk 130.00</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--== End Shop Item ==-->
+                                                                    <div class="product-desc">
+                                                                        <div class="product-info">
+                                                                            <h4 class="title"><a
+                                                                                    href="shop-single.html">{{ $product->product_name }}</a>
+                                                                            </h4>
+                                                                            <div class="star-content">
+                                                                                <i class="fa fa-star-o"></i>
+                                                                                <i class="fa fa-star-o"></i>
+                                                                                <i class="fa fa-star-o"></i>
+                                                                                <i class="fa fa-star-o"></i>
+                                                                                <i class="fa fa-star-o"></i>
+                                                                            </div>
+                                                                            <div class="prices">
+                                                                                <span
+                                                                                    class="price">TK{{ $product->product_price }}</span>
 
-                                                        <!--== Start Shop Item ==-->
-                                                        <div class="product-item">
-                                                            <div class="inner-content">
-                                                                <div class="product-thumb">
-                                                                    <a href="shop-single.html">
-                                                                        <img class="w-100"
-                                                                             src="{{ asset("frontend-access/") }}/assets/img/shop/2.jpg"
-                                                                             alt="Image-HasTech">
-                                                                    </a>
-                                                                    <div class="product-action">
-                                                                        <div class="addto-wrap">
-                                                                            <a class="add-cart" href="shop-cart.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-shopping-cart"></i>
-                                          <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-wishlist"
-                                                                               href="wishlist.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-wishlist"></i>
-                                          <i class="hover-icon bardy bardy-wishlist"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-quick-view"
-                                                                               href="javascript:void(0);">
-                                        <span class="icon">
-                                          <i class="bardy bardy-quick-view"></i>
-                                          <i class="hover-icon bardy bardy-quick-view"></i>
-                                        </span>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="product-desc">
-                                                                    <div class="product-info">
-                                                                        <h4 class="title"><a href="shop-single.html">2.
-                                                                                New badge product</a></h4>
-                                                                        <div class="star-content">
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                        </div>
-                                                                        <div class="prices">
-                                                                            <span class="price">Tk 80.00 </span>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!--== End Shop Item ==-->
-                                                    </div>
-                                                    <div class="swiper-slide">
-                                                        <!--== Start Shop Item ==-->
-                                                        <div class="product-item">
-                                                            <div class="inner-content">
-                                                                <div class="product-thumb">
-                                                                    <a href="shop-single.html">
-                                                                        <img class="w-100"
-                                                                             src="{{ asset("frontend-access/") }}/assets/img/shop/3.jpg"
-                                                                             alt="Image-HasTech">
-                                                                    </a>
-                                                                    <div class="product-action">
-                                                                        <div class="addto-wrap">
-                                                                            <a class="add-cart" href="shop-cart.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-shopping-cart"></i>
-                                          <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-wishlist"
-                                                                               href="wishlist.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-wishlist"></i>
-                                          <i class="hover-icon bardy bardy-wishlist"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-quick-view"
-                                                                               href="javascript:void(0);">
-                                        <span class="icon">
-                                          <i class="bardy bardy-quick-view"></i>
-                                          <i class="hover-icon bardy bardy-quick-view"></i>
-                                        </span>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="product-desc">
-                                                                    <div class="product-info">
-                                                                        <h4 class="title"><a href="shop-single.html">3.
-                                                                                Variable product</a></h4>
-                                                                        <div class="star-content">
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                        </div>
-                                                                        <div class="prices">
-                                                                            <span class="price">Tk 40.00 </span>
-                                                                            <span class="price-old">Tk 85.00</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--== End Shop Item ==-->
-
-                                                        <!--== Start Shop Item ==-->
-                                                        <div class="product-item">
-                                                            <div class="inner-content">
-                                                                <div class="product-thumb">
-                                                                    <a href="shop-single.html">
-                                                                        <img class="w-100"
-                                                                             src="{{ asset("frontend-access/") }}/assets/img/shop/4.jpg"
-                                                                             alt="Image-HasTech">
-                                                                    </a>
-                                                                    <div class="product-action">
-                                                                        <div class="addto-wrap">
-                                                                            <a class="add-cart" href="shop-cart.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-shopping-cart"></i>
-                                          <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-wishlist"
-                                                                               href="wishlist.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-wishlist"></i>
-                                          <i class="hover-icon bardy bardy-wishlist"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-quick-view"
-                                                                               href="javascript:void(0);">
-                                        <span class="icon">
-                                          <i class="bardy bardy-quick-view"></i>
-                                          <i class="hover-icon bardy bardy-quick-view"></i>
-                                        </span>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="product-desc">
-                                                                    <div class="product-info">
-                                                                        <h4 class="title"><a href="shop-single.html">4.
-                                                                                Soldout product</a></h4>
-                                                                        <div class="star-content">
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                        </div>
-                                                                        <div class="prices">
-                                                                            <span class="price">Tk 19.00 </span>
-                                                                            <span class="price-old">Tk 29.00</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--== End Shop Item ==-->
-                                                    </div>
-                                                    <div class="swiper-slide">
-                                                        <!--== Start Shop Item ==-->
-                                                        <div class="product-item">
-                                                            <div class="inner-content">
-                                                                <div class="product-thumb">
-                                                                    <a href="shop-single.html">
-                                                                        <img class="w-100"
-                                                                             src="{{ asset("frontend-access/") }}/assets/img/shop/5.jpg"
-                                                                             alt="Image-HasTech">
-                                                                    </a>
-                                                                    <div class="product-action">
-                                                                        <div class="addto-wrap">
-                                                                            <a class="add-cart" href="shop-cart.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-shopping-cart"></i>
-                                          <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-wishlist"
-                                                                               href="wishlist.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-wishlist"></i>
-                                          <i class="hover-icon bardy bardy-wishlist"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-quick-view"
-                                                                               href="javascript:void(0);">
-                                        <span class="icon">
-                                          <i class="bardy bardy-quick-view"></i>
-                                          <i class="hover-icon bardy bardy-quick-view"></i>
-                                        </span>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="product-desc">
-                                                                    <div class="product-info">
-                                                                        <h4 class="title"><a href="shop-single.html">5.
-                                                                                Simple product</a></h4>
-                                                                        <div class="star-content">
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                        </div>
-                                                                        <div class="prices">
-                                                                            <span class="price">Tk 50.00</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--== End Shop Item ==-->
-
-                                                        <!--== Start Shop Item ==-->
-                                                        <div class="product-item">
-                                                            <div class="inner-content">
-                                                                <div class="product-thumb">
-                                                                    <a href="shop-single.html">
-                                                                        <img class="w-100"
-                                                                             src="{{ asset("frontend-access/") }}/assets/img/shop/6.jpg"
-                                                                             alt="Image-HasTech">
-                                                                    </a>
-                                                                    <div class="product-action">
-                                                                        <div class="addto-wrap">
-                                                                            <a class="add-cart" href="shop-cart.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-shopping-cart"></i>
-                                          <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-wishlist"
-                                                                               href="wishlist.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-wishlist"></i>
-                                          <i class="hover-icon bardy bardy-wishlist"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-quick-view"
-                                                                               href="javascript:void(0);">
-                                        <span class="icon">
-                                          <i class="bardy bardy-quick-view"></i>
-                                          <i class="hover-icon bardy bardy-quick-view"></i>
-                                        </span>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="product-desc">
-                                                                    <div class="product-info">
-                                                                        <h4 class="title"><a href="shop-single.html">6.
-                                                                                Variable with soldout product</a></h4>
-                                                                        <div class="star-content">
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                        </div>
-                                                                        <div class="prices">
-                                                                            <span class="price">Tk 55.00</span>
-                                                                            <span class="price-old">Tk 75.00</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--== End Shop Item ==-->
-                                                    </div>
-                                                    <div class="swiper-slide">
-                                                        <!--== Start Shop Item ==-->
-                                                        <div class="product-item">
-                                                            <div class="inner-content">
-                                                                <div class="product-thumb">
-                                                                    <a href="shop-single.html">
-                                                                        <img class="w-100"
-                                                                             src="{{ asset("frontend-access/") }}/assets/img/shop/7.jpg"
-                                                                             alt="Image-HasTech">
-                                                                    </a>
-                                                                    <div class="product-action">
-                                                                        <div class="addto-wrap">
-                                                                            <a class="add-cart" href="shop-cart.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-shopping-cart"></i>
-                                          <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-wishlist"
-                                                                               href="wishlist.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-wishlist"></i>
-                                          <i class="hover-icon bardy bardy-wishlist"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-quick-view"
-                                                                               href="javascript:void(0);">
-                                        <span class="icon">
-                                          <i class="bardy bardy-quick-view"></i>
-                                          <i class="hover-icon bardy bardy-quick-view"></i>
-                                        </span>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="product-desc">
-                                                                    <div class="product-info">
-                                                                        <h4 class="title"><a href="shop-single.html">7.
-                                                                                Sample affiliate product</a></h4>
-                                                                        <div class="star-content">
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                        </div>
-                                                                        <div class="prices">
-                                                                            <span class="price">Tk 29.00</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--== End Shop Item ==-->
-
-                                                        <!--== Start Shop Item ==-->
-                                                        <div class="product-item">
-                                                            <div class="inner-content">
-                                                                <div class="product-thumb">
-                                                                    <a href="shop-single.html">
-                                                                        <img class="w-100"
-                                                                             src="{{ asset("frontend-access/") }}/assets/img/shop/8.jpg"
-                                                                             alt="Image-HasTech">
-                                                                    </a>
-                                                                    <div class="product-action">
-                                                                        <div class="addto-wrap">
-                                                                            <a class="add-cart" href="shop-cart.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-shopping-cart"></i>
-                                          <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-wishlist"
-                                                                               href="wishlist.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-wishlist"></i>
-                                          <i class="hover-icon bardy bardy-wishlist"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-quick-view"
-                                                                               href="javascript:void(0);">
-                                        <span class="icon">
-                                          <i class="bardy bardy-quick-view"></i>
-                                          <i class="hover-icon bardy bardy-quick-view"></i>
-                                        </span>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="ht-countdown ht-countdown-style"
-                                                                         data-date="4/24/2022"></div>
-                                                                </div>
-                                                                <div class="product-desc">
-                                                                    <div class="product-info">
-                                                                        <h4 class="title"><a href="shop-single.html">8.
-                                                                                Countdown product</a></h4>
-                                                                        <div class="star-content">
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                        </div>
-                                                                        <div class="prices">
-                                                                            <span class="price">Tk 39.00 </span>
-                                                                            <span class="price-old">Tk 60.00</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--== End Shop Item ==-->
-                                                    </div>
-                                                    <div class="swiper-slide">
-                                                        <!--== Start Shop Item ==-->
-                                                        <div class="product-item">
-                                                            <div class="inner-content">
-                                                                <div class="product-thumb">
-                                                                    <a href="shop-single.html">
-                                                                        <img class="w-100"
-                                                                             src="{{ asset("frontend-access/") }}/assets/img/shop/9.jpg"
-                                                                             alt="Image-HasTech">
-                                                                    </a>
-                                                                    <div class="product-action">
-                                                                        <div class="addto-wrap">
-                                                                            <a class="add-cart" href="shop-cart.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-shopping-cart"></i>
-                                          <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-wishlist"
-                                                                               href="wishlist.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-wishlist"></i>
-                                          <i class="hover-icon bardy bardy-wishlist"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-quick-view"
-                                                                               href="javascript:void(0);">
-                                        <span class="icon">
-                                          <i class="bardy bardy-quick-view"></i>
-                                          <i class="hover-icon bardy bardy-quick-view"></i>
-                                        </span>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="product-desc">
-                                                                    <div class="product-info">
-                                                                        <h4 class="title"><a href="shop-single.html">9.
-                                                                                Without shortcode product</a></h4>
-                                                                        <div class="star-content">
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                        </div>
-                                                                        <div class="prices">
-                                                                            <span class="price">Tk 79.00</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--== End Shop Item ==-->
-
-                                                        <!--== Start Shop Item ==-->
-                                                        <div class="product-item">
-                                                            <div class="inner-content">
-                                                                <div class="product-thumb">
-                                                                    <a href="shop-single.html">
-                                                                        <img class="w-100"
-                                                                             src="{{ asset("frontend-access/") }}/assets/img/shop/10.jpg"
-                                                                             alt="Image-HasTech">
-                                                                    </a>
-                                                                    <div class="product-action">
-                                                                        <div class="addto-wrap">
-                                                                            <a class="add-cart" href="shop-cart.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-shopping-cart"></i>
-                                          <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-wishlist"
-                                                                               href="wishlist.html">
-                                        <span class="icon">
-                                          <i class="bardy bardy-wishlist"></i>
-                                          <i class="hover-icon bardy bardy-wishlist"></i>
-                                        </span>
-                                                                            </a>
-                                                                            <a class="add-quick-view"
-                                                                               href="javascript:void(0);">
-                                        <span class="icon">
-                                          <i class="bardy bardy-quick-view"></i>
-                                          <i class="hover-icon bardy bardy-quick-view"></i>
-                                        </span>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="product-desc">
-                                                                    <div class="product-info">
-                                                                        <h4 class="title"><a href="shop-single.html">11.
-                                                                                Product with video</a></h4>
-                                                                        <div class="star-content">
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                            <i class="fa fa-star-o"></i>
-                                                                        </div>
-                                                                        <div class="prices">
-                                                                            <span class="price">Tk 39.00</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--== End Shop Item ==-->
-                                                    </div>
+                                                    @endforeach
                                                 </div>
 
                                                 <!--== Add Swiper navigation Buttons ==-->
@@ -608,875 +111,16 @@
                                                         class="fa fa-angle-left"></i></div>
                                                 <div class="swiper-button swiper-button-next"><i
                                                         class="fa fa-angle-right"></i></div>
-
-                                                <!--== Add Swiper Pagination Buttons ==-->
-                                                <div class="swiper-pagination"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="chair" role="tabpanel" aria-labelledby="chair-tab">
-                                    <div class="row">
-                                        <div class="col-sm-6 col-lg-4 col-xl-3">
-                                            <!--== Start Shop Item ==-->
-                                            <div class="product-item">
-                                                <div class="inner-content">
-                                                    <div class="product-thumb">
-                                                        <a href="shop-single.html">
-                                                            <img class="w-100"
-                                                                 src="{{ asset("frontend-access/") }}/assets/img/shop/1.jpg"
-                                                                 alt="Image-HasTech">
-                                                        </a>
-                                                        <div class="product-action">
-                                                            <div class="addto-wrap">
-                                                                <a class="add-cart" href="shop-cart.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-shopping-cart"></i>
-                                    <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-wishlist" href="wishlist.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-wishlist"></i>
-                                    <i class="hover-icon bardy bardy-wishlist"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-quick-view" href="javascript:void(0);">
-                                  <span class="icon">
-                                    <i class="bardy bardy-quick-view"></i>
-                                    <i class="hover-icon bardy bardy-quick-view"></i>
-                                  </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-desc">
-                                                        <div class="product-info">
-                                                            <h4 class="title"><a href="shop-single.html">1. New and sale
-                                                                    badge product</a></h4>
-                                                            <div class="star-content">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <div class="prices">
-                                                                <span class="price">Tk 110.00 </span>
-                                                                <span class="price-old">Tk 130.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--== End Shop Item ==-->
 
-                                            <!--== Start Shop Item ==-->
-                                            <div class="product-item">
-                                                <div class="inner-content">
-                                                    <div class="product-thumb">
-                                                        <a href="shop-single.html">
-                                                            <img class="w-100"
-                                                                 src="{{ asset("frontend-access/") }}/assets/img/shop/2.jpg"
-                                                                 alt="Image-HasTech">
-                                                        </a>
-                                                        <div class="product-action">
-                                                            <div class="addto-wrap">
-                                                                <a class="add-cart" href="shop-cart.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-shopping-cart"></i>
-                                    <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-wishlist" href="wishlist.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-wishlist"></i>
-                                    <i class="hover-icon bardy bardy-wishlist"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-quick-view" href="javascript:void(0);">
-                                  <span class="icon">
-                                    <i class="bardy bardy-quick-view"></i>
-                                    <i class="hover-icon bardy bardy-quick-view"></i>
-                                  </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-desc">
-                                                        <div class="product-info">
-                                                            <h4 class="title"><a href="shop-single.html">2. New badge
-                                                                    product</a></h4>
-                                                            <div class="star-content">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <div class="prices">
-                                                                <span class="price">Tk 80.00 </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--== End Shop Item ==-->
-                                        </div>
-                                        <div class="col-sm-6 col-lg-4 col-xl-3">
-                                            <!--== Start Shop Item ==-->
-                                            <div class="product-item">
-                                                <div class="inner-content">
-                                                    <div class="product-thumb">
-                                                        <a href="shop-single.html">
-                                                            <img class="w-100"
-                                                                 src="{{ asset("frontend-access/") }}/assets/img/shop/3.jpg"
-                                                                 alt="Image-HasTech">
-                                                        </a>
-                                                        <div class="product-action">
-                                                            <div class="addto-wrap">
-                                                                <a class="add-cart" href="shop-cart.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-shopping-cart"></i>
-                                    <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-wishlist" href="wishlist.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-wishlist"></i>
-                                    <i class="hover-icon bardy bardy-wishlist"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-quick-view" href="javascript:void(0);">
-                                  <span class="icon">
-                                    <i class="bardy bardy-quick-view"></i>
-                                    <i class="hover-icon bardy bardy-quick-view"></i>
-                                  </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-desc">
-                                                        <div class="product-info">
-                                                            <h4 class="title"><a href="shop-single.html">3. Variable
-                                                                    product</a></h4>
-                                                            <div class="star-content">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <div class="prices">
-                                                                <span class="price">Tk 40.00 </span>
-                                                                <span class="price-old">Tk 85.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--== End Shop Item ==-->
+                                <div class="tab-pane fade" id="chair" role="tabpanel"
+                                     aria-labelledby="chair-tab">
 
-                                            <!--== Start Shop Item ==-->
-                                            <div class="product-item">
-                                                <div class="inner-content">
-                                                    <div class="product-thumb">
-                                                        <a href="shop-single.html">
-                                                            <img class="w-100"
-                                                                 src="{{ asset("frontend-access/") }}/assets/img/shop/4.jpg"
-                                                                 alt="Image-HasTech">
-                                                        </a>
-                                                        <div class="product-action">
-                                                            <div class="addto-wrap">
-                                                                <a class="add-cart" href="shop-cart.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-shopping-cart"></i>
-                                    <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-wishlist" href="wishlist.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-wishlist"></i>
-                                    <i class="hover-icon bardy bardy-wishlist"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-quick-view" href="javascript:void(0);">
-                                  <span class="icon">
-                                    <i class="bardy bardy-quick-view"></i>
-                                    <i class="hover-icon bardy bardy-quick-view"></i>
-                                  </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-desc">
-                                                        <div class="product-info">
-                                                            <h4 class="title"><a href="shop-single.html">4. Soldout
-                                                                    product</a></h4>
-                                                            <div class="star-content">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <div class="prices">
-                                                                <span class="price">Tk 19.00 </span>
-                                                                <span class="price-old">Tk 29.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--== End Shop Item ==-->
-                                        </div>
-                                        <div class="col-sm-6 col-lg-4 col-xl-3 d-none d-lg-block">
-                                            <!--== Start Shop Item ==-->
-                                            <div class="product-item">
-                                                <div class="inner-content">
-                                                    <div class="product-thumb">
-                                                        <a href="shop-single.html">
-                                                            <img class="w-100"
-                                                                 src="{{ asset("frontend-access/") }}/assets/img/shop/5.jpg"
-                                                                 alt="Image-HasTech">
-                                                        </a>
-                                                        <div class="product-action">
-                                                            <div class="addto-wrap">
-                                                                <a class="add-cart" href="shop-cart.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-shopping-cart"></i>
-                                    <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-wishlist" href="wishlist.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-wishlist"></i>
-                                    <i class="hover-icon bardy bardy-wishlist"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-quick-view" href="javascript:void(0);">
-                                  <span class="icon">
-                                    <i class="bardy bardy-quick-view"></i>
-                                    <i class="hover-icon bardy bardy-quick-view"></i>
-                                  </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-desc">
-                                                        <div class="product-info">
-                                                            <h4 class="title"><a href="shop-single.html">5. Simple
-                                                                    product</a></h4>
-                                                            <div class="star-content">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <div class="prices">
-                                                                <span class="price">Tk 50.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--== End Shop Item ==-->
-
-                                            <!--== Start Shop Item ==-->
-                                            <div class="product-item">
-                                                <div class="inner-content">
-                                                    <div class="product-thumb">
-                                                        <a href="shop-single.html">
-                                                            <img class="w-100"
-                                                                 src="{{ asset("frontend-access/") }}/assets/img/shop/6.jpg"
-                                                                 alt="Image-HasTech">
-                                                        </a>
-                                                        <div class="product-action">
-                                                            <div class="addto-wrap">
-                                                                <a class="add-cart" href="shop-cart.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-shopping-cart"></i>
-                                    <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-wishlist" href="wishlist.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-wishlist"></i>
-                                    <i class="hover-icon bardy bardy-wishlist"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-quick-view" href="javascript:void(0);">
-                                  <span class="icon">
-                                    <i class="bardy bardy-quick-view"></i>
-                                    <i class="hover-icon bardy bardy-quick-view"></i>
-                                  </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-desc">
-                                                        <div class="product-info">
-                                                            <h4 class="title"><a href="shop-single.html">6. Variable
-                                                                    with soldout product</a></h4>
-                                                            <div class="star-content">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <div class="prices">
-                                                                <span class="price">Tk 55.00</span>
-                                                                <span class="price-old">Tk 75.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--== End Shop Item ==-->
-                                        </div>
-                                        <div class="col-sm-6 col-lg-4 col-xl-3 d-none d-xl-block">
-                                            <!--== Start Shop Item ==-->
-                                            <div class="product-item">
-                                                <div class="inner-content">
-                                                    <div class="product-thumb">
-                                                        <a href="shop-single.html">
-                                                            <img class="w-100"
-                                                                 src="{{ asset("frontend-access/") }}/assets/img/shop/7.jpg"
-                                                                 alt="Image-HasTech">
-                                                        </a>
-                                                        <div class="product-action">
-                                                            <div class="addto-wrap">
-                                                                <a class="add-cart" href="shop-cart.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-shopping-cart"></i>
-                                    <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-wishlist" href="wishlist.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-wishlist"></i>
-                                    <i class="hover-icon bardy bardy-wishlist"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-quick-view" href="javascript:void(0);">
-                                  <span class="icon">
-                                    <i class="bardy bardy-quick-view"></i>
-                                    <i class="hover-icon bardy bardy-quick-view"></i>
-                                  </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-desc">
-                                                        <div class="product-info">
-                                                            <h4 class="title"><a href="shop-single.html">7. Sample
-                                                                    affiliate product</a></h4>
-                                                            <div class="star-content">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <div class="prices">
-                                                                <span class="price">Tk 29.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--== End Shop Item ==-->
-
-                                            <!--== Start Shop Item ==-->
-                                            <div class="product-item">
-                                                <div class="inner-content">
-                                                    <div class="product-thumb">
-                                                        <a href="shop-single.html">
-                                                            <img class="w-100"
-                                                                 src="{{ asset("frontend-access/") }}/assets/img/shop/8.jpg"
-                                                                 alt="Image-HasTech">
-                                                        </a>
-                                                        <div class="product-action">
-                                                            <div class="addto-wrap">
-                                                                <a class="add-cart" href="shop-cart.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-shopping-cart"></i>
-                                    <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-wishlist" href="wishlist.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-wishlist"></i>
-                                    <i class="hover-icon bardy bardy-wishlist"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-quick-view" href="javascript:void(0);">
-                                  <span class="icon">
-                                    <i class="bardy bardy-quick-view"></i>
-                                    <i class="hover-icon bardy bardy-quick-view"></i>
-                                  </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="ht-countdown ht-countdown-style"
-                                                             data-date="4/24/2022"></div>
-                                                    </div>
-                                                    <div class="product-desc">
-                                                        <div class="product-info">
-                                                            <h4 class="title"><a href="shop-single.html">8. Countdown
-                                                                    product</a></h4>
-                                                            <div class="star-content">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <div class="prices">
-                                                                <span class="price">Tk 39.00 </span>
-                                                                <span class="price-old">Tk 60.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--== End Shop Item ==-->
-                                        </div>
-                                    </div>
                                 </div>
-                                <div class="tab-pane fade" id="sofa" role="tabpanel" aria-labelledby="sofa-tab">
-                                    <div class="row">
-                                        <div class="col-sm-6 col-lg-4 col-xl-3">
-                                            <!--== Start Shop Item ==-->
-                                            <div class="product-item">
-                                                <div class="inner-content">
-                                                    <div class="product-thumb">
-                                                        <a href="shop-single.html">
-                                                            <img class="w-100"
-                                                                 src="{{ asset("frontend-access/") }}/assets/img/shop/1.jpg"
-                                                                 alt="Image-HasTech">
-                                                        </a>
-                                                        <div class="product-action">
-                                                            <div class="addto-wrap">
-                                                                <a class="add-cart" href="shop-cart.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-shopping-cart"></i>
-                                    <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-wishlist" href="wishlist.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-wishlist"></i>
-                                    <i class="hover-icon bardy bardy-wishlist"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-quick-view" href="javascript:void(0);">
-                                  <span class="icon">
-                                    <i class="bardy bardy-quick-view"></i>
-                                    <i class="hover-icon bardy bardy-quick-view"></i>
-                                  </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-desc">
-                                                        <div class="product-info">
-                                                            <h4 class="title"><a href="shop-single.html">1. New and sale
-                                                                    badge product</a></h4>
-                                                            <div class="star-content">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <div class="prices">
-                                                                <span class="price">Tk 110.00 </span>
-                                                                <span class="price-old">Tk 130.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--== End Shop Item ==-->
 
-                                            <!--== Start Shop Item ==-->
-                                            <div class="product-item">
-                                                <div class="inner-content">
-                                                    <div class="product-thumb">
-                                                        <a href="shop-single.html">
-                                                            <img class="w-100"
-                                                                 src="{{ asset("frontend-access/") }}/assets/img/shop/2.jpg"
-                                                                 alt="Image-HasTech">
-                                                        </a>
-                                                        <div class="product-action">
-                                                            <div class="addto-wrap">
-                                                                <a class="add-cart" href="shop-cart.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-shopping-cart"></i>
-                                    <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-wishlist" href="wishlist.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-wishlist"></i>
-                                    <i class="hover-icon bardy bardy-wishlist"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-quick-view" href="javascript:void(0);">
-                                  <span class="icon">
-                                    <i class="bardy bardy-quick-view"></i>
-                                    <i class="hover-icon bardy bardy-quick-view"></i>
-                                  </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-desc">
-                                                        <div class="product-info">
-                                                            <h4 class="title"><a href="shop-single.html">2. New badge
-                                                                    product</a></h4>
-                                                            <div class="star-content">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <div class="prices">
-                                                                <span class="price">Tk 80.00 </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--== End Shop Item ==-->
-                                        </div>
-                                        <div class="col-sm-6 col-lg-4 col-xl-3">
-                                            <!--== Start Shop Item ==-->
-                                            <div class="product-item">
-                                                <div class="inner-content">
-                                                    <div class="product-thumb">
-                                                        <a href="shop-single.html">
-                                                            <img class="w-100"
-                                                                 src="{{ asset("frontend-access/") }}/assets/img/shop/3.jpg"
-                                                                 alt="Image-HasTech">
-                                                        </a>
-                                                        <div class="product-action">
-                                                            <div class="addto-wrap">
-                                                                <a class="add-cart" href="shop-cart.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-shopping-cart"></i>
-                                    <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-wishlist" href="wishlist.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-wishlist"></i>
-                                    <i class="hover-icon bardy bardy-wishlist"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-quick-view" href="javascript:void(0);">
-                                  <span class="icon">
-                                    <i class="bardy bardy-quick-view"></i>
-                                    <i class="hover-icon bardy bardy-quick-view"></i>
-                                  </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-desc">
-                                                        <div class="product-info">
-                                                            <h4 class="title"><a href="shop-single.html">3. Variable
-                                                                    product</a></h4>
-                                                            <div class="star-content">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <div class="prices">
-                                                                <span class="price">Tk 40.00 </span>
-                                                                <span class="price-old">Tk 85.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--== End Shop Item ==-->
-
-                                            <!--== Start Shop Item ==-->
-                                            <div class="product-item">
-                                                <div class="inner-content">
-                                                    <div class="product-thumb">
-                                                        <a href="shop-single.html">
-                                                            <img class="w-100"
-                                                                 src="{{ asset("frontend-access/") }}/assets/img/shop/4.jpg"
-                                                                 alt="Image-HasTech">
-                                                        </a>
-                                                        <div class="product-action">
-                                                            <div class="addto-wrap">
-                                                                <a class="add-cart" href="shop-cart.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-shopping-cart"></i>
-                                    <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-wishlist" href="wishlist.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-wishlist"></i>
-                                    <i class="hover-icon bardy bardy-wishlist"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-quick-view" href="javascript:void(0);">
-                                  <span class="icon">
-                                    <i class="bardy bardy-quick-view"></i>
-                                    <i class="hover-icon bardy bardy-quick-view"></i>
-                                  </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-desc">
-                                                        <div class="product-info">
-                                                            <h4 class="title"><a href="shop-single.html">4. Soldout
-                                                                    product</a></h4>
-                                                            <div class="star-content">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <div class="prices">
-                                                                <span class="price">Tk 19.00 </span>
-                                                                <span class="price-old">Tk 29.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--== End Shop Item ==-->
-                                        </div>
-                                        <div class="col-sm-6 col-lg-4 col-xl-3 d-none d-lg-block">
-                                            <!--== Start Shop Item ==-->
-                                            <div class="product-item">
-                                                <div class="inner-content">
-                                                    <div class="product-thumb">
-                                                        <a href="shop-single.html">
-                                                            <img class="w-100"
-                                                                 src="{{ asset("frontend-access/") }}/assets/img/shop/5.jpg"
-                                                                 alt="Image-HasTech">
-                                                        </a>
-                                                        <div class="product-action">
-                                                            <div class="addto-wrap">
-                                                                <a class="add-cart" href="shop-cart.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-shopping-cart"></i>
-                                    <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-wishlist" href="wishlist.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-wishlist"></i>
-                                    <i class="hover-icon bardy bardy-wishlist"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-quick-view" href="javascript:void(0);">
-                                  <span class="icon">
-                                    <i class="bardy bardy-quick-view"></i>
-                                    <i class="hover-icon bardy bardy-quick-view"></i>
-                                  </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-desc">
-                                                        <div class="product-info">
-                                                            <h4 class="title"><a href="shop-single.html">5. Simple
-                                                                    product</a></h4>
-                                                            <div class="star-content">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <div class="prices">
-                                                                <span class="price">Tk 50.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--== End Shop Item ==-->
-
-                                            <!--== Start Shop Item ==-->
-                                            <div class="product-item">
-                                                <div class="inner-content">
-                                                    <div class="product-thumb">
-                                                        <a href="shop-single.html">
-                                                            <img class="w-100"
-                                                                 src="{{ asset("frontend-access/") }}/assets/img/shop/6.jpg"
-                                                                 alt="Image-HasTech">
-                                                        </a>
-                                                        <div class="product-action">
-                                                            <div class="addto-wrap">
-                                                                <a class="add-cart" href="shop-cart.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-shopping-cart"></i>
-                                    <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-wishlist" href="wishlist.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-wishlist"></i>
-                                    <i class="hover-icon bardy bardy-wishlist"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-quick-view" href="javascript:void(0);">
-                                  <span class="icon">
-                                    <i class="bardy bardy-quick-view"></i>
-                                    <i class="hover-icon bardy bardy-quick-view"></i>
-                                  </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-desc">
-                                                        <div class="product-info">
-                                                            <h4 class="title"><a href="shop-single.html">6. Variable
-                                                                    with soldout product</a></h4>
-                                                            <div class="star-content">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <div class="prices">
-                                                                <span class="price">Tk 55.00</span>
-                                                                <span class="price-old">Tk 75.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--== End Shop Item ==-->
-                                        </div>
-                                        <div class="col-sm-6 col-lg-4 col-xl-3 d-none d-xl-block">
-                                            <!--== Start Shop Item ==-->
-                                            <div class="product-item">
-                                                <div class="inner-content">
-                                                    <div class="product-thumb">
-                                                        <a href="shop-single.html">
-                                                            <img class="w-100"
-                                                                 src="{{ asset("frontend-access/") }}/assets/img/shop/7.jpg"
-                                                                 alt="Image-HasTech">
-                                                        </a>
-                                                        <div class="product-action">
-                                                            <div class="addto-wrap">
-                                                                <a class="add-cart" href="shop-cart.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-shopping-cart"></i>
-                                    <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-wishlist" href="wishlist.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-wishlist"></i>
-                                    <i class="hover-icon bardy bardy-wishlist"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-quick-view" href="javascript:void(0);">
-                                  <span class="icon">
-                                    <i class="bardy bardy-quick-view"></i>
-                                    <i class="hover-icon bardy bardy-quick-view"></i>
-                                  </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-desc">
-                                                        <div class="product-info">
-                                                            <h4 class="title"><a href="shop-single.html">7. Sample
-                                                                    affiliate product</a></h4>
-                                                            <div class="star-content">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <div class="prices">
-                                                                <span class="price">Tk 29.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--== End Shop Item ==-->
-
-                                            <!--== Start Shop Item ==-->
-                                            <div class="product-item">
-                                                <div class="inner-content">
-                                                    <div class="product-thumb">
-                                                        <a href="shop-single.html">
-                                                            <img class="w-100"
-                                                                 src="{{ asset("frontend-access/") }}/assets/img/shop/8.jpg"
-                                                                 alt="Image-HasTech">
-                                                        </a>
-                                                        <div class="product-action">
-                                                            <div class="addto-wrap">
-                                                                <a class="add-cart" href="shop-cart.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-shopping-cart"></i>
-                                    <i class="hover-icon bardy bardy-shopping-cart"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-wishlist" href="wishlist.html">
-                                  <span class="icon">
-                                    <i class="bardy bardy-wishlist"></i>
-                                    <i class="hover-icon bardy bardy-wishlist"></i>
-                                  </span>
-                                                                </a>
-                                                                <a class="add-quick-view" href="javascript:void(0);">
-                                  <span class="icon">
-                                    <i class="bardy bardy-quick-view"></i>
-                                    <i class="hover-icon bardy bardy-quick-view"></i>
-                                  </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="ht-countdown ht-countdown-style"
-                                                             data-date="4/24/2022"></div>
-                                                    </div>
-                                                    <div class="product-desc">
-                                                        <div class="product-info">
-                                                            <h4 class="title"><a href="shop-single.html">8. Countdown
-                                                                    product</a></h4>
-                                                            <div class="star-content">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <div class="prices">
-                                                                <span class="price">Tk 39.00 </span>
-                                                                <span class="price-old">Tk 60.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--== End Shop Item ==-->
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -1522,60 +166,62 @@
                     <div class="col-12">
                         <div class="swiper-container swiper-nav swiper-slide-gap product-slider-container">
                             <div class="swiper-wrapper">
-                                @foreach($products as $product)
-                                <div class="swiper-slide">
-                                    <!--== Start Shop Item ==-->
-                                    <div class="product-item">
-                                        <div class="inner-content">
-                                            <div class="product-thumb">
-                                                <a href="shop-single.html">
-                                                    <img class="w-100"
-                                                         src="{{ asset("$product->product_image") }}"
-                                                         alt="Image-HasTech">
-                                                </a>
-                                                <div class="product-action">
-                                                    <div class="addto-wrap">
-                                                        <a class="add-cart" href="shop-cart.html">
+                                @foreach($products1 as $product)
+                                    <div class="swiper-slide">
+
+                                        <div class="product-item">
+                                            <div class="inner-content">
+                                                <div class="product-thumb">
+                                                    <a href="shop-single.html">
+                                                        <img class="w-100"
+                                                             src="{{ asset("$product->product_image") }}"
+                                                             alt="Image-HasTech">
+                                                    </a>
+                                                    <div class="product-action">
+                                                        <div class="addto-wrap">
+                                                            <a class="add-cart" href="shop-cart.html">
                               <span class="icon">
                                 <i class="bardy bardy-shopping-cart"></i>
                                 <i class="hover-icon bardy bardy-shopping-cart"></i>
                               </span>
-                                                        </a>
-                                                        <a class="add-wishlist" href="wishlist.html">
+                                                            </a>
+                                                            <a class="add-wishlist" href="wishlist.html">
                               <span class="icon">
                                 <i class="bardy bardy-wishlist"></i>
                                 <i class="hover-icon bardy bardy-wishlist"></i>
                               </span>
-                                                        </a>
-                                                        <a class="add-quick-view" href="javascript:void(0);">
+                                                            </a>
+                                                            <a class="add-quick-view" href="javascript:void(0);">
                               <span class="icon">
                                 <i class="bardy bardy-quick-view"></i>
                                 <i class="hover-icon bardy bardy-quick-view"></i>
                               </span>
-                                                        </a>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="product-desc">
-                                                <div class="product-info">
-                                                    <h4 class="title"><a href="shop-single.html">{{ $product->product_name }}</a></h4>
-                                                    <div class="star-content">
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="prices">
-                                                        <span class="price">TK{{ $product->product_price }}</span>
+                                                <div class="product-desc">
+                                                    <div class="product-info">
+                                                        <h4 class="title"><a
+                                                                href="shop-single.html">{{ $product->product_name }}</a>
+                                                        </h4>
+                                                        <div class="star-content">
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        </div>
+                                                        <div class="prices">
+                                                            <span class="price">TK{{ $product->product_price }}</span>
 
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
-                                    <!--== End Shop Item ==-->
-                                </div>
                                 @endforeach
                             </div>
 

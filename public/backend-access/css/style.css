@@ -3742,8 +3742,8 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th:first-child::befor
 
 /* line 256, G:/admin_project/8 admin/Analytic/scss/_header.scss */
 .profile_info img {
-    max-width: 42px;
-    max-height: 42px;
+    width: 47px;
+    height: 47px;
     border-radius: 50%;
     cursor: pointer;
 }

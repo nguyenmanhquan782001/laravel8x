@@ -18,8 +18,12 @@ class CreateTableOrderdetailTable extends Migration
             $table->id();
             $table->unsignedBigInteger("product_id");
             $table->unsignedBigInteger('order_id');
-            $table->foreign('product_id')->references('id')->on('product');
-            $table->foreign('order_id')->references('id')->on('order')->onDelete('cascade');
+            $table->foreign('product_id')
+                ->references('id')->on('product')
+                ->onDelete('cascade');
+            $table->foreign('order_id')
+                ->references('id')
+                ->on('order')->onDelete('cascade');
             $table->timestamps();
         });
     }

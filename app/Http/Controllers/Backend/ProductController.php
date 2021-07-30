@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use phpDocumentor\Reflection\Types\False_;
+use function Composer\Autoload\includeFile;
 
 class ProductController extends Controller
 {
@@ -24,24 +25,49 @@ class ProductController extends Controller
     use StorageImage;
 
 
-    public function __construct(CategoryModel $categoryModel,
-                                ProductModel $productModel,
-                                GalleryModel $galleryModel
+    public function __construct(
+        CategoryModel $categoryModel,
+        ProductModel $productModel,
+        GalleryModel $galleryModel
     )
     {
         $this->categoryModel = $categoryModel;
         $this->productModel = $productModel;
         $this->galleryModel = $galleryModel;
-
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->productModel->all();
+        $pageSize = 10;
+        $categories = $this->getCategory($parentId = '');
 
+        $instance = $this->productModel;
+        if ($request->all() == 0) {
+            $products = $instance->paginate($pageSize);
+        } else {
+            $keyword = $request->query("product_name", '');
+            $status = $request->query("product_status", 0);
+            $category_id = $request->query('category_id', 0);
+
+            $order_by = $request->query("order_by", 0);
+            $queryORM = $instance->where("product_name", 'LIKE', "%" . $keyword . "%");
+
+            $statusAll = [1, 2];
+            if (in_array($status, $statusAll)) {
+                $queryORM->where('product_status', $status);
+            }
+//            if (isset($category_id) && $category_id > 0) {
+//
+//            }
+        }
+        $products = $queryORM->paginate($pageSize)->appends($request->except('page'));
         $products->load('category');
-
-        return view("backend.product.index", compact('products'));
+        $data = [];
+        $data['products'] = $products;
+        $data['categories'] = $categories;
+        $data['pageSize'] = $pageSize;
+        $data['status'] = $status;
+        return view("backend.product.index", $data);
     }
 
     public function create()
@@ -114,7 +140,6 @@ class ProductController extends Controller
                 }
                 $product->product_publish = $product_publish;
 
-                $product->user_id = 1;
                 $data_image = $this->StorageImage($request, 'product_image', 'image_of_product');
                 if (!empty($data_image)) {
                     $product_image = $data_image['file_path'];
@@ -135,11 +160,11 @@ class ProductController extends Controller
                     }
                 }
                 DB::commit();
-                return redirect()->route('product.index')->with("success" , "Thêm mới sản phẩm thành công");
+                return redirect()->route('product.index')
+                    ->with("success", "Thêm mới sản phẩm thành công");
             }
         } catch (\Exception $exception) {
             DB::rollBack();
-
             return redirect()->route('404');
         }
     }
@@ -199,7 +224,6 @@ class ProductController extends Controller
             $product->product_quantity = $product_quantity;
             $product->category_id = $category_id;
             $product->product_status = $product_status;
-            $product->user_id = 1 ;
             $product->product_desc = $product_desc;
             $product->short_desc = $short_desc;
             if ($request->hasFile('product_image')) {
@@ -230,10 +254,10 @@ class ProductController extends Controller
             }
             $product->save();
             DB::commit();
-            return redirect()->route("product.index")->with("success" , "Sửa sản phẩm xong");
-        }catch (\Exception $exception) {
-            echo  $exception;
-            return  false ;
+            return redirect()->route("product.index")->with("success", "Sửa sản phẩm xong");
+        } catch (\Exception $exception) {
+            echo $exception;
+            return false;
         }
     }
 
@@ -258,7 +282,7 @@ class ProductController extends Controller
         return response()->json([
             'code' => '200',
             'message' => 'success'
-        ] ,200);
+        ], 200);
 
     }
 }

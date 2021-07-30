@@ -1,4 +1,5 @@
 <!--== Start Preloader Content ==-->
+
 <div class="preloader-wrap">
     <div class="preloader">
         <span class="dot"></span>
@@ -12,6 +13,7 @@
 <!--== End Preloader Content ==-->
 
 <!--== Start Top Notification Wrapper ==-->
+
 <div class="top-notification-bar">
     <div class="container">
         <div class="row">
@@ -39,82 +41,21 @@
             <div class="col">
                 <div class="header-navigation-area">
                     <ul class="main-menu nav">
-                        <li class="has-submenu"><a href="#"><span>Home</span></a>
-                            <ul class="submenu-nav">
-                                <li><a href="index.html">Home - 1</a></li>
-                                <li><a href="index-two.html">Home - 2</a></li>
-                            </ul>
+                        <li class="has-submenu"><a href="{{ route("homepage") }}"><span>Home</span></a>
+
                         </li>
-                        <li class="has-submenu full-width"><a href="#/"><span>Shop</span></a>
-                            <ul class="submenu-nav submenu-nav-mega">
-                                <li class="mega-menu-item"><a href="#/" class="mega-title">Collection 01</a>
-                                    <ul>
-                                        <li><a href="shop-single-name-1.html">New and sale badge product</a></li>
-                                        <li><a href="shop-single-name-1.html">New badge product</a></li>
-                                        <li><a href="shop-single-name-1.html">Variable product</a></li>
-                                        <li><a href="shop-single-name-1.html">Soldout product</a></li>
-                                        <li><a href="shop-single-name-1.html">Simple product</a></li>
-                                        <li><a href="shop-single-name-1.html">Dummy product name</a></li>
-                                    </ul>
-                                </li>
-                                <li class="mega-menu-item"><a href="#/" class="mega-title">Collection 02</a>
-                                    <ul>
-                                        <li><a href="shop-single-name-1.html">Variable with soldout product</a></li>
-                                        <li><a href="shop-single-name-1.html">Sample affiliate product</a></li>
-                                        <li><a href="shop-single-name-1.html">Countdown product</a></li>
-                                        <li><a href="shop-single-name-1.html">Without shortcode product</a></li>
-                                        <li><a href="shop-single-name-1.html">Demo product title</a></li>
-                                        <li><a href="shop-single-name-1.html">Product dummy title</a></li>
-                                    </ul>
-                                </li>
-                                <li class="mega-menu-item"><a href="#/" class="mega-title">Collection 03</a>
-                                    <ul>
-                                        <li><a href="shop-single-name-1.html">Dummy product name</a></li>
-                                        <li><a href="shop-single-name-1.html">Dummy text for title</a></li>
-                                        <li><a href="shop-single-name-1.html">Product title here</a></li>
-                                        <li><a href="shop-single-name-1.html">Simple product</a></li>
-                                        <li><a href="shop-single-name-1.html">Product with video</a></li>
-                                        <li><a href="shop-single-name-1.html">Dummy text for title</a></li>
-                                    </ul>
-                                </li>
-                                <li class="mega-menu-item">
-                                    <ul>
-                                        <li><a href="#/"><img src="{{ asset("frontend-access/") }}/assets/img/shop/banner/2.jpg" alt="Image-HasTech"></a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+                        <li class="has-submenu full-width"><a href="{{ route("shop.products") }}"><span>Shop</span></a>
+
                         </li>
-                        <li class="has-submenu"><a href="#/"><span>Products</span></a>
+                        <li class="has-submenu"><a href="{{ route("shop.products") }}"><span>Products </span></a>
                             <ul class="submenu-nav">
-                                <li><a href="shop-single-new.html">New and sale badge product</a></li>
-                                <li><a href="shop-single-badge.html">New badge product</a></li>
-                                <li><a href="shop-single.html">Variable product</a></li>
-                                <li><a href="shop-single-soldout.html">Soldout product</a></li>
-                                <li><a href="shop-single-simple.html">Simple product</a></li>
-                                <li><a href="shop-single-variable-soldout.html">Variable with soldout product</a></li>
-                                <li><a href="shop-single-affiliate.html">Sample affiliate product</a></li>
-                                <li><a href="shop-single-countdown.html">Countdown product</a></li>
-                                <li><a href="shop-single-shortcode.html">Without shortcode product</a></li>
-                                <li><a href="shop-single-video.html">Product with video</a></li>
+                                @foreach($productHeader as $product)
+                                <li><a href="{{ route("product.detail" , ['id' => $product->id]) }}">{{ $product->product_name }}</a></li>
+                                @endforeach
                             </ul>
                         </li>
                         <li class="has-submenu"><a href="#/"><span>Pages</span></a>
-                            <ul class="submenu-nav">
-                                <li class="has-submenu"><a href="#">Shop</a>
-                                    <ul class="submenu-nav">
-                                        <li><a href="shop-3-grid.html">Shop 3 Column</a></li>
-                                        <li><a href="shop-4-grid.html">Shop 4 Column</a></li>
-                                        <li><a href="shop.html">Shop Left Sidebar</a></li>
-                                        <li><a href="shop-right-sidebar.html">Shop Right Sidebar</a></li>
-                                        <li><a href="shop-list.html">Shop Listing View</a></li>
-                                        <li><a href="shop-list-left-sidebar.html">Shop List left Sidebar</a></li>
-                                        <li><a href="shop-list-right-sidebar.html">Shop List Right Sidebar</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="shop-size-chart.html">Size chart</a></li>
-                                <li><a href="shop-shipping-policy.html">Shipping policy</a></li>
-                                <li><a href="about.html">About</a></li>
-                            </ul>
+
                         </li>
                         <li class="has-submenu"><a href="#/"><span>Blog</span></a>
                             <ul class="submenu-nav">
@@ -180,37 +121,40 @@
                         <div class="header-mini-cart">
                             <button class="mini-cart-toggle">
                                 <i class="icon bardy bardy-shopping-cart"></i>
-                                <span class="number">2</span>
+                                <span class="number"></span>
                             </button>
+
                             <div class="mini-cart-dropdown">
                                 <h4 class="cart-title">Your cart</h4>
-                                <div class="cart-item-wrap">
+                                <div class="cart-item-wrap" style="">
+                                    @if(session('cart'))
+                                       @php
+                                       $carts = session('cart');
+
+                                       @endphp
+                                    @foreach($carts as $cart)
+
                                     <div class="cart-item">
                                         <div class="thumb">
-                                            <a href="#/"><img class="w-100" src="{{ asset("frontend-access/") }}/assets/img/shop/cart/mini1.jpg" alt="Image-HasTech"></a>
+                                            <a href=""><img class="w-100" src="{{ asset("{$cart['image']}") }}" alt=""></a>
                                             <a class="remove" href="javascript:void(0);"><i class="fa fa-trash-o"></i></a>
                                         </div>
                                         <div class="content">
-                                            <h5 class="title"><a href="#/">5. Simple product</a></h5>
-                                            <span>1 x Tk 50.00</span>
+                                            <h5 class="title"><a href="#/">{{ $cart['name'] }}</a></h5>
+                                            <span> {{ $cart['product_quantity'] }}  x {{ $cart['price'] }}   </span>
                                         </div>
                                     </div>
-                                    <div class="cart-item">
-                                        <div class="thumb">
-                                            <a href="#/"><img class="w-100" src="{{ asset("frontend-access/") }}/assets/img/shop/cart/mini2.jpg" alt="Image-HasTech"></a>
-                                            <a class="remove" href="javascript:void(0);"><i class="fa fa-trash-o"></i></a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="#/">2. New badge product - m / gold</a></h5>
-                                            <span>1 x Tk 80.00</span>
-                                        </div>
-                                    </div>
+                                        @endforeach
+
+                                    @else
+                                        <h4>Không có sản phẩm nào trong giỏ hàng</h4>
+                                    @endif
                                 </div>
                                 <div class="mini-cart-footer">
                                     <h4>Subtotal: <span class="total">Tk 130.00</span></h4>
                                     <div class="cart-btn">
-                                        <a href="shop-cart.html">View Cart</a>
-                                        <a href="shop-checkout.html">Checkout</a>
+                                        <a href="{{ route("cart.show") }}">View Cart</a>
+                                        <a href="{{ route("payment.index") }}">Checkout</a>
                                     </div>
                                 </div>
                             </div>

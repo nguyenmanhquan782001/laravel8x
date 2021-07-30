@@ -19,17 +19,18 @@
                                     <div class="search_inner">
                                         <form action="#">
                                             <div class="search_field">
-                                                <input type="text" placeholder="Search here..." >
+                                                <input type="text" placeholder="Search here...">
                                             </div>
-                                            <button class="close_search"> <i class="ti-search"></i> </button>
+                                            <button class="close_search"><i class="ti-search"></i></button>
                                         </form>
                                     </div>
-                                    <span class="f_s_14 f_w_400 ml_25 white_text text_white" >Apps</span>
+                                    <span class="f_s_14 f_w_400 ml_25 white_text text_white">Apps</span>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <a class="bell_notification_clicker" href="#"> <img src="{{ asset("backend-access/") }}/img/icon/bell.svg" alt="">
+                            <a class="bell_notification_clicker" href="#"> <img
+                                    src="{{ asset("backend-access/") }}/img/icon/bell.svg" alt="">
                                 <span>2</span>
                             </a>
                             <!-- Menu_NOtification_Wrap  -->
@@ -108,18 +109,26 @@
                             <!--/ Menu_NOtification_Wrap  -->
                         </li>
                         <li>
-                            <a class="CHATBOX_open" href="#"> <img src="{{ asset("backend-access/") }}/img/icon/msg.svg" alt=""> <span>2</span>  </a>
+                            <a class="CHATBOX_open" href="#"> <img src="{{ asset("backend-access/") }}/img/icon/msg.svg"
+                                                                   alt=""> <span>2</span> </a>
                         </li>
                     </div>
                     <div class="profile_info">
-                        <img src="{{ asset("backend-access/") }}/img/client_img.png" alt="#">
+                        @php
+                            $session_user = session("user-login" , false);
+                        @endphp
+                        @if(@$session_user['avatar'] == "" )
+                            <img src="https://anhdep123.com/wp-content/uploads/2021/05/hinh-avatar-trang.jpg" alt="#">
+                        @else
+                            <img src="{{ asset("{$session_user['avatar']}") }}" alt="#">
+                        @endif
                         <div class="profile_info_iner">
                             <div class="profile_author_name">
-                                <p>Neurologist </p>
-                                <h5></h5>
+                                <p>Admin To Đùng </p>
+                                <h6 style="color: white; margin-top: 10px"> {{ $session_user['name'] }}</h6>
                             </div>
                             <div class="profile_info_details">
-                                <a href="#">My Profile </a>
+                                <a href="{{ route("user.profile" , ['id' => $session_user['id']]) }}">My Profile </a>
                                 <a href="#">Settings</a>
                                 <a href="{{ route('logout') }}">Log Out </a>
                             </div>

@@ -13,7 +13,8 @@ class OrderModel extends Model
     protected $table = "order" ;
     protected $primaryKey = "id";
     protected  $guarded = [] ;
-    public  function  product() {
-        return $this->belongsToMany(ProductModel::class , 'orderdetail' , 'product_id' , 'order_id' );
+
+    public  function  detail() {
+        return $this->belongsToMany(ProductModel::class , 'orderdetail' , 'order_id' , 'product_id');
     }
 }

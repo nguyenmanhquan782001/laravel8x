@@ -100,7 +100,7 @@
                                                             iền</a></td>
                                                 @endif
                                                 <td>
-                                                    <a data-url=""
+                                                    <a data-url="{{ route("order.delete", ['id' => $order->id]) }}"
                                                        href="" class="far fa-trash-alt"></a>
                                                     <a href="{{ route("order.edit" , ['id' => $order->id]) }}"
                                                        class="far fa-edit"></a>
@@ -124,4 +124,42 @@
 
 @endsection
 @section("append_js")
+    <script>
+        function removeProduct(e) {
+            e.preventDefault();
+            let urlRequest = $(this).data('url');
+            let that = $(this);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Xóa đơn hàng + xóa luôn trong đơn hàng chi tiết",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Đồng ý xóa'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "GET",
+                        url: urlRequest,
+                        success: function (data) {
+                            if (data.code == 200) {
+                                that.parent().parent().remove();
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
+                                )
+                            }
+                        },
+                        error: function () {
+                        }
+                    })
+                }
+            })
+        }
+        $(function () {
+            $(document).on('click', '.fa-trash-alt', removeProduct)
+        })
+    </script>
 @endsection

@@ -65,6 +65,7 @@
                                             <th scope="col">STT</th>
                                             <th scope="col">Category</th>
                                             <th scope="col">Slug</th>
+                                            <th class="scope">Hiện có</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Actions</th>
                                         </tr>
@@ -78,6 +79,7 @@
                                                 </th>
                                                 <td>{{ $category->category_name }}</td>
                                                 <td>{{ $category->slug }}</td>
+                                                <td>{{ count($category->countProduct)  }} sản phẩm</td>
                                                 <td>
                                                     @if($category->status == 1)
                                                         <a href="#" class="status_btn">Ok-Active</a>
@@ -116,7 +118,7 @@
             let that = $(this);
 
             Swal.fire({
-                title: 'Are you sure?',
+                title: 'Xóa không thể khôi phục ?',
                 text: "Bạn chắc chắn muốn xóa danh mục này chứ!",
                 icon: 'warning',
                 showCancelButton: true,
@@ -133,18 +135,16 @@
                                 that.parent().parent().remove();
                                 Swal.fire(
                                     'Deleted!',
-                                    'Your file has been deleted.',
-                                    'success'
+                                    'Đã xóa danh mục',
+                                    'Cảm ơn !'
                                 )
                             }
                         } ,
                         error : function () {
-
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Nguy hiểm',
-                                text: 'Không thể xóa danh mục này',
-                                footer: '<a href="">Hello anh em</a>'
+                                text: 'Vui lòng xóa sản phẩm tồn tại ở danh mục này',
                             })
                         }
                     })
@@ -154,7 +154,7 @@
         $(function () {
             $(document).on('click', '.fa-trash-alt', removeData)
         })
-
     </script>
+
 
 @endsection

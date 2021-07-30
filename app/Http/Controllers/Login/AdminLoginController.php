@@ -51,11 +51,15 @@ class AdminLoginController extends Controller
         if (!$user) {
             return redirect()->back()->withInput()->with("toast_info", "Email không chính xác hoặc chưa có trong hệ thống");
         }
-        if (isset($user->id) && ($user->id > 0) && Hash::check($password, $user->password)) {
+        if (Hash::check($password, $user->password) == false) {
+            return redirect()->back()->withInput()->with("toast_info", "Mật khẩu chưa chính xác");
+        }
+        if (isset($user->id) && ($user->id > 0) && Hash::check($password, $user->password) && ($user->status == 1)) {
             $userDetail = [
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
+                'avatar' => $user->avatar
             ];
             session(['user-login' => $userDetail]);
             if ($remember == "on") {
@@ -67,9 +71,11 @@ class AdminLoginController extends Controller
                     'remember_token' => $cookieValue,
                 ]);
             }
+            return redirect()->route("dashboard.index")->with('toast_success', "Chào mừng bạn đến với trang admin");
+        }else{
+            return redirect()->back()->withInput()->with('toast_warning', "Tài khoản này có thể đã bị khóa vui lòng kiểm tra lại");
         }
 
-        return redirect()->route("dashboard.index")->with('toast_success', "Chào mừng bạn đến với trang admin");
     }
 
     public function logout(Request $request)

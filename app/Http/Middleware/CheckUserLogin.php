@@ -22,7 +22,6 @@ class CheckUserLogin
            $user_remember =  DB::table('users')->where('remember_token' , '=' , $remember);
            if (isset($user_remember->id) && ($user_remember->id >0)){
                return  $next($request);
-
            }
        }
        $session_user = session('user-login' , false);

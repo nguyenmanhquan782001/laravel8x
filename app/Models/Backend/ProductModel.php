@@ -25,6 +25,11 @@ class ProductModel extends Model
     public  function  gallery() {
         return $this->hasMany(GalleryModel::class , 'product_id');
     }
-
+    public  function  order(){
+        return $this->belongsToMany(OrderModel::class ,
+            'orderdetail',
+            'product_id',
+        'order_id');
+    }
 
 }

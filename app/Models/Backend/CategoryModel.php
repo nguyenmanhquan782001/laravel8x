@@ -11,6 +11,7 @@ class CategoryModel extends Model
 protected  $table = "category";
 protected $primaryKey = "id";
 protected  $fillable = ['category_name' , 'slug' , 'status'];
-
-
+public  function countProduct() {
+     return $this->hasMany(ProductModel::class , 'category_id');
+}
 }

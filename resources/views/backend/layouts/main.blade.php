@@ -46,7 +46,7 @@
     <!-- menu css  -->
     <link rel="stylesheet" href="{{ asset("/backend-access/css/metisMenu.css") }}">
     <!-- style CSS -->
-    <link rel="stylesheet" href=" {{ asset("/backend-access/css/style.css") }}" />
+    <link rel="stylesheet" href=" {{ asset("/backend-access/") }}/css/style.css" />
     <link rel="stylesheet" href="{{ asset("/backend-access/css/colors/default.css") }}" id="colorSkinCSS">
     <link rel="stylesheet" href="{{ asset("/backend-access/js/select2/select2.min.css") }}">
     <style>
@@ -94,6 +94,8 @@
 @include('sweetalert::alert')
 @yield('append_js')
 </body>
+@livewireScripts
+@stack("script")
 
 <!-- Mirrored from demo.dashboardpack.com/analytic-html/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Jun 2021 13:03:03 GMT -->
 </html>

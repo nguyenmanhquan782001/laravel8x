@@ -18,15 +18,15 @@
 <script src="{{ asset("/backend-access/vendors/owl_carousel/js/owl.carousel.min.js") }}"></script>
 
 <!-- responsive table -->
-<script src="{{ asset("/backend-access/vendors/datatable/js/jquery.dataTables.min.js") }}"></script>
-<script src="{{ asset("/backend-access/vendors/datatable/js/dataTables.responsive.min.js") }}"></script>
-<script src="{{ asset("/backend-access/vendors/datatable/js/dataTables.buttons.min.js") }}"></script>
-<script src="{{ asset("/backend-access/vendors/datatable/js/buttons.flash.min.js") }}"></script>
-<script src="{{ asset("/backend-access/vendors/datatable/js/jszip.min.js") }}"></script>
-<script src="{{ asset("/backend-access/vendors/datatable/js/pdfmake.min.js") }}"></script>
-<script src="{{ asset("/backend-access/vendors/datatable/js/vfs_fonts.js") }}"></script>
-<script src="{{ asset("/backend-access/vendors/datatable/js/buttons.html5.min.js") }}"></script>
-<script src="{{ asset("/backend-access/vendors/datatable/js/buttons.print.min.js") }}"></script>
+{{--<script src="{{ asset("/backend-access/vendors/datatable/js/jquery.dataTables.min.js") }}"></script>--}}
+{{--<script src="{{ asset("/backend-access/vendors/datatable/js/dataTables.responsive.min.js") }}"></script>--}}
+{{--<script src="{{ asset("/backend-access/vendors/datatable/js/dataTables.buttons.min.js") }}"></script>--}}
+{{--<script src="{{ asset("/backend-access/vendors/datatable/js/buttons.flash.min.js") }}"></script>--}}
+{{--<script src="{{ asset("/backend-access/vendors/datatable/js/jszip.min.js") }}"></script>--}}
+{{--<script src="{{ asset("/backend-access/vendors/datatable/js/pdfmake.min.js") }}"></script>--}}
+{{--<script src="{{ asset("/backend-access/vendors/datatable/js/vfs_fonts.js") }}"></script>--}}
+{{--<script src="{{ asset("/backend-access/vendors/datatable/js/buttons.html5.min.js") }}"></script>--}}
+{{--<script src="{{ asset("/backend-access/vendors/datatable/js/buttons.print.min.js") }}"></script>--}}
 
 <!-- datepicker  -->
 <script src="{{ asset("/backend-access/vendors/datepicker/datepicker.js") }}"></script>
