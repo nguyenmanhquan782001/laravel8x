@@ -119,7 +119,6 @@
                             <div class="tab-pane fade show active" id="description" role="tabpanel"
                                  aria-labelledby="description-tab">
                                 <div class="product-description">
-
                                     <p>{!!  $product->product_desc !!}</p>
                                 </div>
                             </div>
@@ -144,7 +143,8 @@
                                     <div class="reviews-form-area">
                                         <h4 class="title">Write a review</h4>
                                         <div class="reviews-form-content">
-                                            <form action="#">
+                                            <form action="" method="">
+                                                @csrf
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
@@ -179,6 +179,7 @@
                                                                    type="text" placeholder="Give your review a title">
                                                         </div>
                                                     </div>
+
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="for_comment">Body of Review (1500)</label>
@@ -192,6 +193,8 @@
                                                             </button>
                                                         </div>
                                                     </div>
+
+
                                                 </div>
                                             </form>
                                         </div>
@@ -218,9 +221,7 @@
                                                 like Aldus PageMaker including versions of Lorem Ipsum.</p>
                                             <a href="#/">Report as Inappropriate</a>
                                         </div>
-                                        <!--== End Reviews Content Item ==-->
 
-                                        <!--== Start Reviews Content Item ==-->
                                         <div class="review-item">
                                             <ul class="review-rating">
                                                 <li class="fa fa-star"></li>
@@ -239,9 +240,7 @@
                                                 by H. Rackham.</p>
                                             <a href="#/">Report as Inappropriate</a>
                                         </div>
-                                        <!--== End Reviews Content Item ==-->
 
-                                        <!--== Start Reviews Content Item ==-->
                                         <div class="review-item">
                                             <ul class="review-rating">
                                                 <li class="fa fa-star"></li>
@@ -257,9 +256,7 @@
                                                 a line in section 1.10.32.</p>
                                             <a href="#/">Report as Inappropriate</a>
                                         </div>
-                                        <!--== End Reviews Content Item ==-->
 
-                                        <!--== Start Reviews Content Item ==-->
                                         <div class="review-item">
                                             <ul class="review-rating">
                                                 <li class="fa fa-star"></li>
@@ -312,18 +309,52 @@
   }
                                 @endphp
                                 <div class="product-comment-content">
-                                    <form action="#">
+                                    <form action="{{ route("cmt") }}" method="post">
+                                        @csrf
                                         <div class="product-comment">
-                                            @if(@$user)
-                                            <img src="{{ asset("{$user['avatar']}") }}" alt="Image-HasTech">
+                                            @if(\Illuminate\Support\Facades\Auth::user())
+                                                @php
+                                                    $getImg =Auth::user();
+                                                @endphp
+                                                <img src="{{ asset(Auth::user()->avatar) }}" alt="Image-HasTech">
                                             @else
-                                                <img src="https://anhdep123.com/wp-content/uploads/2021/05/hinh-avatar-trang.jpg" alt="Image-HasTech">
+                                                <img
+                                                    src="https://anhdep123.com/wp-content/uploads/2021/05/hinh-avatar-trang.jpg"
+                                                    alt="Image-HasTech">
                                             @endif
-                                                <textarea name="con_message" placeholder="Start the discussion…"></textarea>
+                                            <textarea name="content" placeholder="Start the discussion…"></textarea>
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         </div>
                                         <button class="btn-theme" type="submit">Post as Product</button>
                                     </form>
+
                                 </div>
+                                <br>
+                                @foreach($product->comments as $comment)
+                                    <div style="border-bottom: 1px solid black ; margin-bottom: 20px ;">
+                                        <b style="margin-bottom: 20px">{{ $comment->userId->name }}</b>
+                                        <div class="row" style="margin-top: 20px;">
+                                            <div class="col-1 justify-content-sm-center" >
+                                                @if(Auth::user()->id == $comment->user_id && Auth::user() != null )
+                                                <img style="width: 25px; height: 25px ; border-radius: 50% ; margin-bottom: 10px"
+                                                    src="{{ asset(Auth::user()->avatar) }}" alt="">
+                                                @else
+                                                    <img style="width: 25px; height: 25px ; border-radius: 50% ; margin-bottom: 10px"
+                                                        src="https://anhdep123.com/wp-content/uploads/2021/05/hinh-avatar-trang.jpg"
+                                                        alt="Image-HasTech">
+                                                @endif
+                                            </div>
+                                            <div class="col-10">
+                                                <p style="margin-left: 30px">{{  $comment->content }}</p>
+                                            </div>
+                                            <div class="col-1">
+                                                @if(\Illuminate\Support\Facades\Auth::user()->id == $comment->user_id)
+                                                <a href="{{ route("deleteCmt" , ['id' => $comment->id]) }}">Xóa</a>
+                                                    @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                             <div class="tab-pane fade" id="shipping-policy" role="tabpanel"
                                  aria-labelledby="shipping-policy-tab">
@@ -410,6 +441,4 @@
             </div>
         </div>
     </div>
-
-
 @endsection

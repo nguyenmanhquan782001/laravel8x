@@ -19,15 +19,11 @@
             <div class="nav-short-area">
                 <div class="toolbar-shorter">
                     <label for="SortBy">Sort by</label>
-                    <select id="SortBy" class="form-select" aria-label="Sort by">
-                        <option value="manual">Featured</option>
-                        <option value="best-selling">Best Selling</option>
-                        <option value="title-ascending" selected>Alphabetically, A-Z</option>
-                        <option value="title-descending">Alphabetically, Z-A</option>
-                        <option value="price-ascending">Price, low to high</option>
-                        <option value="price-descending">Price, high to low</option>
-                        <option value="created-descending">Date, new to old</option>
-                        <option value="created-ascending">Date, old to new</option>
+                    <select id="SortBy" name="sort" class="form-select" aria-label="Sort by">
+                        <option value="1" selected>Alphabetically, A-Z</option>
+                        <option value="2">Alphabetically, Z-A</option>
+                        <option value="3">Giảm dần theo giá</option>
+                        <option value="4">Tăng dần theo giá</option>
                     </select>
                 </div>
             </div>

@@ -14,7 +14,13 @@ class OrderModel extends Model
     protected $primaryKey = "id";
     protected  $guarded = [] ;
 
+
     public  function  detail() {
-        return $this->belongsToMany(ProductModel::class , 'orderdetail' , 'order_id' , 'product_id');
+        return $this->belongsToMany(ProductModel::class ,
+            'orderdetail' ,
+            'order_id' ,
+            'product_id')
+            ->withPivot('product_quantity', 'product_price');
     }
+
 }

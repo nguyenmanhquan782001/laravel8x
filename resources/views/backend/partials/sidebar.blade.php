@@ -64,7 +64,21 @@
                 <li><a href="{{ route("order.index") }}">Order Data</a></li>
             </ul>
         </li>
-
+        <h4 class="menu-text"><span>Comment</span> <i class="fas fa-ellipsis-h"></i> </h4>
+        <li class="">
+            <a   class="has-arrow" href="#" aria-expanded="false">
+                <div class="nav_icon_small">
+                    <img src="{{ asset("backend-access/img/menu-icon/8.svg") }}" alt="">
+                </div>
+                <div class="nav_title">
+                    <span>Quản lí comment</span>
+                </div>
+            </a>
+            <ul>
+                <li><a href="">Bình luận</a></li>
+            </ul>
+        </li>
+@role('Admin')
         <h4 class="menu-text"><span>User Data</span> <i class="fas fa-ellipsis-h"></i> </h4>
         <li class="">
             <a   class="has-arrow" href="#" aria-expanded="false">
@@ -94,58 +108,7 @@
                 <li><a href="{{ route("role.index") }}">Role Data</a></li>
             </ul>
         </li>
-
-
-        <h4 class="menu-text"><span>Setting</span> <i class="fas fa-ellipsis-h"></i> </h4>
-        <li class="">
-            <a   class="has-arrow" href="#" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="{{ asset('/backend-access/img/menu-icon/8.svg') }}" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Animations</span>
-                </div>
-            </a>
-            <ul>
-                <li><a href="wow_animation.html">Animate</a></li>
-                <li><a href="Scroll_Reveal.html">Scroll Reveal</a></li>
-                <li><a href="tilt.html">Tilt Animation</a></li>
-
-            </ul>
-        </li>
-        <li class="">
-            <a   class="has-arrow" href="#" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="{{ asset("backend-access/") }}/img/menu-icon/9.svg" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Components</span>
-                </div>
-            </a>
-            <ul>
-                <li><a href="accordion.html">Accordions</a></li>
-                <li><a href="Scrollable.html">Scrollable</a></li>
-                <li><a href="notification.html">Notifications</a></li>
-                <li><a href="carousel.html">Carousel</a></li>
-                <li><a href="Pagination.html">Pagination</a></li>
-            </ul>
-        </li>
-        <li class="">
-            <a   class="has-arrow" href="#" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="{{ asset("backend-access/") }}/img/menu-icon/11.svg" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Table</span>
-                </div>
-            </a>
-            <ul>
-                <li><a href="data_table.html">Data Tables</a></li>
-                <li><a href="bootstrap_table.html">Bootstrap</a></li>
-            </ul>
-        </li>
-
-
+@endrole
 
     </ul>
 </nav>

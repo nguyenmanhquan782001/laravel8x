@@ -18,7 +18,8 @@
                             <div class="white_card_body">
 
                                 <div class="form-group mb-0">
-                                    <input value="{{ old("name", "") }}" type="text" class="form-control" name="name" id="inputText"
+                                    <input value="{{ old("name", "") }}" type="text" class="form-control" name="name"
+                                           id="inputText"
                                            placeholder="Full name...">
                                 </div>
                                 <br>
@@ -41,12 +42,19 @@
                             <div class="white_card_body">
 
                                 <div class="form-group mb-0">
-                                    <input value="{{ old("email" , "") }}" type="Email" class="form-control" name="email" id="inputText"
-                                           placeholder="Email....">
+                                    <input autocomplete="off"
+                                           value="{{ old("email" , "") }}"
+                                           type="Email" class="form-control"
+                                           name="email"
+                                           id="inputText"
+                                           placeholder="Email...."
+                                    >
                                 </div>
                                 <br>
                                 @if($errors->has("email"))
-                                    <h6 class="card-subtitle mb-2 mb-2"><code>{{ $errors->first("email") }}</code></h6>
+                                    <h6 class="card-subtitle mb-2 mb-2">
+                                        <code>{{ $errors->first("email") }}
+                                        </code></h6>
                                 @endif
                             </div>
                         </div>
@@ -63,12 +71,14 @@
                             <div class="white_card_body">
                                 {{--  <h6 class="card-subtitle mb-2 mb-2">Usage<code>type="text"</code></h6>--}}
                                 <div class="form-group mb-0">
-                                    <input type="number" value="{{ old("phone_number" , "") }}" class="form-control" name="phone_number" id="inputText"
+                                    <input type="number" value="{{ old("phone_number" , "") }}" class="form-control"
+                                           name="phone_number" id="inputText"
                                            placeholder="Số điện thoại....">
                                 </div>
                                 <br>
                                 @if($errors->has("phone_number"))
-                                    <h6 class="card-subtitle mb-2 mb-2"><code>{{ $errors->first("phone_number") }}</code></h6>
+                                    <h6 class="card-subtitle mb-2 mb-2">
+                                        <code>{{ $errors->first("phone_number") }}</code></h6>
                                 @endif
                             </div>
                         </div>
@@ -88,12 +98,14 @@
                             <div class="white_card_body">
                                 {{--  <h6 class="card-subtitle mb-2 mb-2">Usage<code>type="text"</code></h6>--}}
                                 <div class="form-group mb-0">
-                                    <input value="{{ old("password" , "") }}" type="password" class="form-control" name="password" id="inputText"
+                                    <input autocomplete="off" value="{{ old("password" , "") }}" type="password"
+                                           class="form-control" name="password" id="inputText"
                                            placeholder="Nhập password....">
                                 </div>
                                 <br>
                                 @if($errors->has("password"))
-                                    <h6 class="card-subtitle mb-2 mb-2"><code>{{ $errors->first("password") }}</code></h6>
+                                    <h6 class="card-subtitle mb-2 mb-2"><code>{{ $errors->first("password") }}</code>
+                                    </h6>
                                 @endif
                             </div>
                         </div>
@@ -110,12 +122,14 @@
                             <div class="white_card_body">
                                 {{--  <h6 class="card-subtitle mb-2 mb-2">Usage<code>type="text"</code></h6>--}}
                                 <div class="form-group mb-0">
-                                    <input value="{{ old("password_confirmation" , "") }}" type="password" class="form-control" name="password_confirmation" id="inputText"
+                                    <input value="{{ old("password_confirmation" , "") }}" type="password"
+                                           class="form-control" name="password_confirmation" id="inputText"
                                            placeholder="Nhập lại password">
                                 </div>
                                 <br>
                                 @if($errors->has("password_confirmation"))
-                                    <h6 class="card-subtitle mb-2 mb-2"><code>{{ $errors->first("password_confirmation") }}</code></h6>
+                                    <h6 class="card-subtitle mb-2 mb-2">
+                                        <code>{{ $errors->first("password_confirmation") }}</code></h6>
                                 @endif
                             </div>
                         </div>
@@ -152,32 +166,39 @@
                             <div class="white_card_header">
                                 <div class="box_header m-0">
                                     <div class="main-title">
-                                        <h3 class="m-0">Vai trò</h3>
+                                        <h3 class="m-0">Chọn role cho user</h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="white_card_body">
                                 <div class="form-group mb-0">
                                     <div wire:ignore>
-                                        <select name="role_id[]" class="js-example-placeholder-multiple js-states form-control"
-
+                                        <select name="role_id[]"
+                                                class="js-example-placeholder-multiple js-states form-control"
                                                 id="select2-dropdown" multiple="multiple" autocomplete="off">
-                                          @foreach($roles as $role)
-                                                <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                                            @foreach($roles as $role)
+                                                <option value="{{ $role->id }}">{{ $role->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
+                                <br>
+                                @if($errors->has("role_id"))
+                                    <h6 class="card-subtitle mb-2 mb-2">
+                                        <code>{{ $errors->first("role_id") }}</code></h6>
+                                @endif
                                 <br>
                             </div>
                         </div>
                     </div>
                 </div>
                 <a href="">
-                    <button type="button" class="btn mb-3 btn-danger"><i class="fas fa-hand-point-left mr-2"></i>Quay lại
+                    <button type="button" class="btn mb-3 btn-danger"><i class="fas fa-hand-point-left mr-2"></i>Quay
+                        lại
                     </button>
                 </a>
-                <button type="submit" class="btn mb-3 btn-success"><i class="fas fa-share-square mr-2"></i>Lưu lại</button>
+                <button type="submit" class="btn mb-3 btn-success"><i class="fas fa-share-square mr-2"></i>Lưu lại
+                </button>
             </form>
 
         </div>

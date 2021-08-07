@@ -3,52 +3,51 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Backend\RolesModel;
+
 use App\Traits\StorageImage;
 use Barryvdh\Debugbar\Facade;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
+
 
 
 class UserController extends Controller
 {
     use StorageImage;
-
     protected $user;
     protected $rolesModel;
 
-    public function __construct(User $user, RolesModel $rolesModel)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->rolesModel = $rolesModel;
+
     }
 
     public function index()
     {
         try {
             DB::beginTransaction();
-            $session_user = session('user-login', false);
-            $id = $session_user['id'];
+            $id = Auth::id();
             $users = DB::table('users')->where('id', '!=', $id)->get();
             DB::commit();
-            return view("backend.user.index", compact('users'));
-
+            return view("backend.user.index", compact('users',));
         } catch (\Exception $exception) {
             DB::rollBack();
             return redirect()->route('404');
         }
-
     }
 
     public function create()
     {
         try {
             DB::beginTransaction();
-            $roles = $this->rolesModel->all();
+            $roles = Role::all();
             $data = [];
             $data['roles'] = $roles;
             DB::commit();
@@ -57,7 +56,6 @@ class UserController extends Controller
             DB::rollBack();
             return redirect()->route('404');
         }
-
     }
 
     public function store(Request $request)
@@ -70,8 +68,7 @@ class UserController extends Controller
                 'phone_number' => "required|unique:users,phone_number",
                 'password' => 'required|min:6|required_with:password_confirmation',
                 'password_confirmation' => "required|same:password",
-
-
+                'role_id' => "required",
             ];
             $message = [
                 'name.required' => "Tên không được để trống",
@@ -84,8 +81,10 @@ class UserController extends Controller
                 "password.required" => "Password không được để trống",
                 "password.min" => "Password phải trên 6 kí tự",
                 "password_confirmation.required" => "Mật khẩu xác nhận không được để trống",
-                'password_confirmation.same' => "Mật khẩu không khớp"
+                'password_confirmation.same' => "Mật khẩu không khớp",
+                "role_id.required" => "Yêu cầu chọn role cho user"
             ];
+
             $validate = Validator::make($request->all(), $ruler, $message);
             $name = $request->input("name", '');
             $email = $request->input("email", '');
@@ -113,22 +112,25 @@ class UserController extends Controller
             }
             DB::commit();
             $user->save();
-            $roleId = $request->role_id;
-            $user->roles()->attach($roleId);
-            return redirect()->route('user.index');
+            $userId = $user->id;
+            $userFind = User::find($userId);
+            $userFind->assignRole($request->role_id);
+            return redirect()->route('user.index')->with('success', 'Thêm user mới ok');
         } catch (\Exception $exception) {
             DB::rollBack();
             return redirect()->route('404');
         }
-
     }
-
     public function profile($id)
     {
         $my_account = $this->user->find($id);
-        return view("backend.profile.profile", compact('my_account'));
+        if (Auth::id() == $id) {
+            return view("backend.profile.profile", compact('my_account'));
+        }
+        else {
+            return  redirect()->route("404");
+        }
     }
-
     public function SaveProfile(Request $request, $id)
     {
         try {
@@ -176,30 +178,30 @@ class UserController extends Controller
             return redirect()->route('404');
         }
     }
-
     public function edit($id)
     {
-
         $user = $this->user->find($id);
-        return view("backend.user.edit", compact('user'));
+        $roleAll = Role::all();
+        $data = [];
+        $data['user'] = $user;
+        $data['roles'] = $roleAll;
+        $role_active = $user->roles;
+        $data['role_active'] = $role_active;
+        return view("backend.user.edit", $data);
     }
 
     public function update(Request $request, $id)
     {
-
-        $status = $request->input("status");
         $user = $this->user->find($id);
-        if ($status === "on") {
-            $status = 1;
-
+        $user->update([
+            'status' => $request->status,
+        ]);
+        if ($request->has("role_id")) {
+            $user->syncRoles($request->role_id);
         } else {
-            $status = 0;
+            return redirect()->back()->with("toast_info", "Yêu cầu chọn ít nhất 1 role dành cho user");
         }
-        $user->status = $status;
-        $user->save();
         return redirect()->route("user.index")->with("toast_success", "Đã sửa đổi trạng thái tài khoản");
-
-
     }
 
     public function delete($id)
@@ -214,6 +216,5 @@ class UserController extends Controller
             'code' => '200',
             'message' => 'success'
         ], 200);
-
     }
 }

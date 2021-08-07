@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -22,11 +23,11 @@ class AdminLoginController extends Controller
 
     public function LoginPage()
     {
-        $user_login = session('user-login' , false);
-        if ($user_login && isset($user_login['id']) && ($user_login['id'] > 0)) {
-            return redirect()->route('dashboard.index');
+        if (Auth::user() && Auth::id() > 0) {
+            return redirect()->route("dashboard.index");
+        } else {
+            return view("backend.login.login");
         }
-        return view("backend.login.login");
     }
 
     public function LoginPost(Request $request)
@@ -47,6 +48,9 @@ class AdminLoginController extends Controller
         $email = $request->input("email", '');
         $password = $request->input("password", '');
         $remember = $request->input("remember_me");
+        if (Auth::attempt(['email' => $email, 'password' => $password , 'status' => 1], $remember)) {
+            return redirect()->route("dashboard.index")->with('toast_success', "Chào mừng bạn đến với trang admin");
+        }
         $user = $this->user->where('email', '=', $email)->first();
         if (!$user) {
             return redirect()->back()->withInput()->with("toast_info", "Email không chính xác hoặc chưa có trong hệ thống");
@@ -54,34 +58,17 @@ class AdminLoginController extends Controller
         if (Hash::check($password, $user->password) == false) {
             return redirect()->back()->withInput()->with("toast_info", "Mật khẩu chưa chính xác");
         }
-        if (isset($user->id) && ($user->id > 0) && Hash::check($password, $user->password) && ($user->status == 1)) {
-            $userDetail = [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'avatar' => $user->avatar
-            ];
-            session(['user-login' => $userDetail]);
-            if ($remember == "on") {
-                $minutes = 3600 * 30;
-                $hash = $user->id . $user->email . $user->password;
-                $cookieValue = Hash::make($hash);
-                cookie('remember', "$cookieValue", "$minutes");
-                $this->user->where("id", $user->id)->update([
-                    'remember_token' => $cookieValue,
-                ]);
-            }
-            return redirect()->route("dashboard.index")->with('toast_success', "Chào mừng bạn đến với trang admin");
-        }else{
-            return redirect()->back()->withInput()->with('toast_warning', "Tài khoản này có thể đã bị khóa vui lòng kiểm tra lại");
-        }
+       else{
+           return redirect()->back()->withInput()->with('toast_warning', "Tài khoản này có thể đã bị khóa vui lòng kiểm tra lại");
+       }
+
 
     }
 
     public function logout(Request $request)
     {
-        cookie('remember' , '' , -3600*30);
-        $request->session()->flush();
+
+        Auth::logout();
         return redirect()->route('login')
             ->with('toast_success', 'Đã đăng xuất ! Mời đăng nhập để tiếp tục dịch vụ');
 

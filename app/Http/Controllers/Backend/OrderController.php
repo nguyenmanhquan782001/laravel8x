@@ -27,13 +27,21 @@ class OrderController extends Controller
     public function index()
     {
         $orders = $this->orderModel->all();
+        if (auth()->user()->hasPermissionTo("Danh sách đơn hàng")) {
+            return view("backend.orders.index", compact('orders'));
+        } else {
+            return redirect()->route("403");
+        }
 
-        return view("backend.orders.index", compact('orders'));
     }
 
     public function create()
     {
-        return view("backend.orders.create");
+        if (auth()->user()->hasPermissionTo("Thêm mới đơn hàng")) {
+            return view("backend.orders.create");
+        } else {
+            return redirect()->route("403");
+        }
     }
 
     public function singleProduct(Request $request)
@@ -126,7 +134,6 @@ class OrderController extends Controller
                 $quantity = $quantities[$key_id];
                 $arr_product = $this->productModel->find($val);
                 $totalPrice = $quantity * $product->product_price;
-
                 $detail = new OrderDetailModel();
                 $detail->product_id = $val;
                 $detail->product_price = $arr_product->product_price;
@@ -145,23 +152,50 @@ class OrderController extends Controller
 
     public function edit($id)
     {
+
         $order = $this->orderModel->find($id);
-        return view("backend.orders.edit", compact('order'));
+        if (auth()->user()->hasPermissionTo("Sửa đơn hàng")) {
+            return view("backend.orders.edit", compact('order'));
+        } else {
+            return redirect()->route('403');
+        }
+
     }
 
-    public function update(Request $request)
+    public function update(Request $request , $id)
     {
+        $ruler = [
+            "customer_name" => "required",
+            "customer_email" => "required",
+            "customer_phone" => "required",
+            "customer_address" => "required",
+        ];
+        $message = [
+            "customer_name.required" => "Không để trống tên khách hàmg",
+            "customer_email.required" => "Không để trống email khách hàng",
+            "customer_phone" => "Không để trống số điện thoại",
+            "customer_address" => "Không để trống địa chỉ giao hàng",
+        ];
+        $validator = Validator::make($request->all(), $ruler, $message);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        } else {
+            $order = OrderModel::find($id);
+            $input = $request->all();
+            $order->update($input);
+            return redirect()->route("order.index")->with("success" , "Sửa đơn hàng thành công");
 
+        }
     }
 
     public function delete($id)
     {
-        $order = OrderModel::find($id) ;
+        $order = OrderModel::find($id);
         $order->delete();
         return response()->json([
-            'code' => 200 ,
+            'code' => 200,
             'message' => 'success'
-        ] , 200);
+        ], 200);
     }
 }
 

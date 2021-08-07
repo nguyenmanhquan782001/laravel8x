@@ -97,7 +97,7 @@
 </div>
 
 @include("frontend.partials2.main_js")
-
+@include('sweetalert::alert')
 </body>
 
 

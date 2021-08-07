@@ -8,6 +8,7 @@ use App\Models\Backend\CategoryModel;
 
 use App\Models\Backend\GalleryModel;
 use App\Models\Backend\ProductModel;
+use App\Models\User;
 use App\Traits\StorageImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,43 +23,61 @@ class ProductController extends Controller
     protected $categoryModel;
     protected $productModel;
     protected $galleryModel;
+    protected $user;
     use StorageImage;
 
 
     public function __construct(
         CategoryModel $categoryModel,
         ProductModel $productModel,
-        GalleryModel $galleryModel
+        GalleryModel $galleryModel,
+        User $user
     )
     {
         $this->categoryModel = $categoryModel;
         $this->productModel = $productModel;
         $this->galleryModel = $galleryModel;
+        $this->user = $user;
     }
 
     public function index(Request $request)
     {
+
         $pageSize = 10;
-        $categories = $this->getCategory($parentId = '');
+        $categories = $this->categoryModel->all();
 
         $instance = $this->productModel;
+
         if ($request->all() == 0) {
             $products = $instance->paginate($pageSize);
         } else {
             $keyword = $request->query("product_name", '');
             $status = $request->query("product_status", 0);
             $category_id = $request->query('category_id', 0);
-
             $order_by = $request->query("order_by", 0);
             $queryORM = $instance->where("product_name", 'LIKE', "%" . $keyword . "%");
-
             $statusAll = [1, 2];
             if (in_array($status, $statusAll)) {
                 $queryORM->where('product_status', $status);
             }
-//            if (isset($category_id) && $category_id > 0) {
-//
-//            }
+            if (!empty($category_id) ){
+                $queryORM->where("category_id" , $category_id);
+            }
+
+            if ($request->order_by == 1) {
+             $abc = $queryORM->orderBy("product_name");
+
+            }
+            if ($request->order_by == 2) {
+                $queryORM->orderByDesc("product_name");
+            }
+            if ($request->order_by == 3) {
+                $queryORM->orderBy("product_price");
+            }
+            if ($request->order_by == 4){
+                $queryORM->orderByDesc("product_price");
+            }
+
         }
         $products = $queryORM->paginate($pageSize)->appends($request->except('page'));
         $products->load('category');
@@ -67,13 +86,26 @@ class ProductController extends Controller
         $data['categories'] = $categories;
         $data['pageSize'] = $pageSize;
         $data['status'] = $status;
-        return view("backend.product.index", $data);
+        $data['category_id'] = $category_id;
+        $data['order_by'] = $order_by;
+        $data['keyword'] = $keyword;
+
+        if (\auth()->user()->hasPermissionTo("Danh sách sản phẩm")) {
+            return view("backend.product.index", $data);
+        } else {
+            return redirect()->route("403");
+        }
+
     }
 
     public function create()
     {
-        $categories = $this->getCategory($parentId = '');
-        return view("backend.product.create", compact('categories'));
+        $categories = $this->categoryModel->all();
+        if (\auth()->user()->hasPermissionTo("Thêm mới sản phẩm")) {
+            return view("backend.product.create", compact('categories'));
+        } else {
+            return redirect()->route("403");
+        }
     }
 
     public function getCategory($parentId)
@@ -90,8 +122,8 @@ class ProductController extends Controller
             DB::beginTransaction();
             $ruler = [
                 "product_name" => "required|unique:product,product_name",
-                "product_price" => "required",
-                "product_quantity" => "required",
+                "product_price" => "required|numeric|min:1",
+                "product_quantity" => "required|numeric|min:1",
                 "category_id" => "required",
                 "product_status" => "required",
                 "product_image" => "required",
@@ -103,7 +135,9 @@ class ProductController extends Controller
                 "product_name.required" => "Tên sản phẩm không được để trống",
                 "product_name.unique" => "Sản phẩm này đã tồn tại",
                 "product_price.required" => "Giá sản phẩm không được để trống",
+                "product_price.min" => "Giá sản phẩm lớn hơn hoặc bằng 1",
                 "product_quantity.required" => "Số lượng sản phẩm không để trống",
+                "product_quantity.min" => "Số lượng sản phẩm phải lớn hơn hoặc bằng 1",
                 "category_id.required" => "Chưa chọn danh mục",
                 "product_status.required" => "Cần chọn trạng thái của sản phẩm",
                 "product_image.required" => "Chưa có ảnh sản phẩm",
@@ -140,7 +174,7 @@ class ProductController extends Controller
                 }
                 $product->product_publish = $product_publish;
 
-                $data_image = $this->StorageImage($request, 'product_image', 'image_of_product');
+                $data_image = $this->StorageImage($request, 'product_image', "image_of_product");
                 if (!empty($data_image)) {
                     $product_image = $data_image['file_path'];
                     $image_name = $data_image['file_name'];
@@ -150,7 +184,7 @@ class ProductController extends Controller
                 $product->save();
                 if ($request->hasFile('product_gallery')) {
                     foreach ($request->product_gallery as $productItem) {
-                        $product_gallery = $this->StoreImageMultiple($productItem, 'product_gallery');
+                        $product_gallery = $this->StoreImageMultiple($productItem, 'product_gallery/' . "$product->id");
                         $image_path = $product_gallery['file_path'];
                         $image_name = $product_gallery['file_name'];
                         $product->gallery()->create([
@@ -173,17 +207,22 @@ class ProductController extends Controller
     {
         $product = $this->productModel->find($id);
         $categories = $this->getCategory($product->category_id);
-        return view("backend.product.edit", compact('product', 'categories'));
+        if (\auth()->user()->hasPermissionTo('Sửa sản phẩm')) {
+            return view("backend.product.edit", compact('product', 'categories'));
+        } else {
+            return redirect()->route("403");
+        }
     }
 
     public function update(Request $request, $id)
     {
+
         try {
             DB::beginTransaction();
             $ruler = [
                 'product_name' => "required|unique:product,product_name,$id,id",
-                'product_price' => "required",
-                'product_quantity' => "required",
+                "product_price" => "required|numeric|min:1",
+                "product_quantity" => "required|numeric|min:1",
                 'category_id' => "required",
                 'product_desc' => "required",
                 "short_desc" => "required",
@@ -191,12 +230,15 @@ class ProductController extends Controller
             $message = [
                 "product_name.required" => "Tên sản phẩm không được để trống",
                 "product_name.unique" => "Sản phẩm đã tồn tại",
-                "product_quantity.required" => "Số lượng sản phẩm chưa có",
+                "product_price.required" => "Giá sản phẩm không được để trống",
+                "product_price.min" => "Giá sản phẩm lớn hơn hoặc bằng 1",
+                "product_quantity.required" => "Số lượng sản phẩm không để trống",
+                "product_quantity.min" => "Số lượng sản phẩm phải lớn hơn hoặc bằng 1",
                 "category_id.required" => "Chưa chọn danh mục",
                 "product_desc.required" => "Chưa có mô tả sản phẩm",
-                "short_desc.required" => "Chưa có mô tả ngắn sản phẩm"
-
+                "short_desc.required" => "Chưa có mô tả ngắn sản phẩm",
             ];
+
             $validator = Validator::make($request->all(), $ruler, $message);
             $product_name = $request->input("product_name", '');
             $product_price = $request->input('product_price', 0);
@@ -234,16 +276,20 @@ class ProductController extends Controller
                 $product->product_image = $product_image;
                 $product->image_name = $image_name;
             }
-            if ($request->hasFile('product_gallery')) {
-                foreach ($this->galleryModel->where("product_id", $id)->get() as $gallery) {
-                    if ($gallery->image_path) {
-                        $galleries = str_replace('/storage', '/public', $gallery->image_path);
-                        Storage::delete($galleries);
-                    }
+            if ($request->input("removeGalleryIds") != "") {
+                $strIds = rtrim($request->removeGalleryIds, '|');
+                $listId = explode("|", $strIds);
+                $removeList = $this->galleryModel->whereIn('id', $listId)->get();
+                foreach ($removeList as $remove) {
+                    $itemRemove = str_replace("/storage", '/public', $remove->image_path);
+                    Storage::delete($itemRemove);
                 }
-                $this->galleryModel->where("product_id", $id)->delete();
+                $this->galleryModel->destroy($listId);
+
+            }
+            if ($request->hasFile('product_gallery')) {
                 foreach ($request->product_gallery as $gallery) {
-                    $galleries = $this->StoreImageMultiple($gallery, 'product_gallery');
+                    $galleries = $this->StoreImageMultiple($gallery, "product_gallery/$product->id");
                     $image_path = $galleries['file_path'];
                     $image_name = $galleries['file_name'];
                     $product->gallery()->create([
@@ -270,19 +316,14 @@ class ProductController extends Controller
             $delete_item = str_replace("/storage", '/public', $product->product_image);
             Storage::delete($delete_item);
         }
-
-        foreach ($product_gallery as $item) {
-            if ($item->image_path) {
-                $delete_item = str_replace("/storage", '/public', $item->image_path);
-                Storage::delete($delete_item);
-            }
-        }
+        Storage::deleteDirectory("public/product_gallery/$product->id");
         $product_image->delete();
         $product->delete();
         return response()->json([
             'code' => '200',
             'message' => 'success'
         ], 200);
-
     }
+
+
 }

@@ -14,7 +14,8 @@
 @section("main_content")
     <div class="main_content_iner ">
         <div class="container-fluid p-0 sm_padding_15px">
-            <form action="{{ route('product.update' , ['id' => $product->id]) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('product.update' , ['id' => $product->id]) }}" method="post"
+                  enctype="multipart/form-data">
                 @csrf
                 <div class="row justify-content-center">
                     <div class="col-lg-4">
@@ -190,7 +191,7 @@
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="white_card card_height_100 mb_30">
                             <div class="white_card_header">
                                 <div class="box_header m-0">
@@ -217,7 +218,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-8">
                         <div class="white_card card_height_100 mb_30">
                             <div class="white_card_header">
                                 <div class="box_header m-0">
@@ -227,28 +228,40 @@
                                 </div>
                             </div>
                             <div class="white_card_body">
-                                <div class="form-group mb-0">
-                                    <div id="wrapper">
-                                        <div id="image-holder1"></div>
-                                        <input class="form-control" name="product_gallery[]" id="fileUpload1"
-                                               type="file" multiple/>
-                                        <br>
-                                        @foreach($product->gallery as $item)
-                                            <img src="{{ asset("$item->image_path") }}" alt="" width="100px">
-                                        @endforeach
-                                    </div>
+                                <input type="hidden" name="removeGalleryIds" value="">
+                                <button type="button"
+                                        id="add_new"
+                                        style="margin-bottom: 5px;"
+                                        class="btn btn-warning">Add Image
+                                </button>
+                                <div class="form-group mb-0" id="new_img">
+                                    @foreach($product->gallery as $item)
+                                        <div class="file-upload" id="wrapper ${rowId}"
+                                             style="display: flex ; margin-bottom: 15px">
+                                            <img style="margin-right: 15px" row_id="${rowId}"
+                                                 src="{{ $item->image_path }}" width="100px">
+
+{{--                                            <div style="max-width: 200px"><p>{{ $item->image_path }}</p></div>--}}
+                                            <input type="file" class="form-control" name="product_gallery[]" disabled>
+                                            <div>
+                                                <button style="margin-left: 125px; "
+                                                        onclick="removeGalleryImage(this, {{$item->id}})"
+                                                        class="btn btn-danger">
+                                                    <i class="fas fa-trash-alt">
+                                                    </i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                     <br>
                                     @if($errors->has("product_gallery"))
                                         <h6 class="card-subtitle mb-2 mb-2">
                                             <code>{{ $errors->first("product_gallery") }}</code></h6>
                                     @endif
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
 
                 <div class="row justify-content-center">
@@ -338,36 +351,6 @@
             });
         });
 
-
-        //
-        $(document).ready(function () {
-            $("#fileUpload1").on('change', function () {
-                //Get count of selected files
-                var countFiles = $(this)[0].files.length;
-                var imgPath = $(this)[0].value;
-                var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
-                var image_holder = $("#image-holder1");
-                image_holder.empty();
-                if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
-                    if (typeof (FileReader) != "undefined") {
-                        //loop for each file selected for uploaded.
-                        for (var i = 0; i < countFiles; i++) {
-                            var reader = new FileReader();
-                            reader.onload = function (e) {
-                                $("<img />", {
-                                    "src": e.target.result,
-                                    "class": "thumb-image"
-                                }).appendTo(image_holder);
-                            }
-                            image_holder.show();
-                            reader.readAsDataURL($(this)[0].files[i]);
-                        }
-                    } else {
-                        alert("This browser does not support FileReader.");
-                    }
-                }
-            });
-        });
         //CKEDITOR
         CKEDITOR.replace("maxlength-textarea", {
             filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
@@ -375,6 +358,59 @@
             filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
             filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
         });
+        // Edit Image ;
+        $(document).ready(function () {
+            $('#add_new').click(function () {
+                var rowId = Date.now();
+                $('#new_img').append(`
+                            <div class="file-upload"  id="wrapper ${rowId}" style="display: flex ; margin-bottom: 15px">
+                               <img style="margin-right: 15px" row_id="${rowId}" src="" width="100px" >
+                                     <input style="width: 320px"
+                            row_id="${rowId}"
+                            onchange="loadFile(event, ${rowId})"
+                            class="form-control"
+                            name="product_gallery[]"
+                            id="fileUpload1"
+                            type="file"/>
+<div>
+<button style="margin-left: 15px; "
+                                onclick="removeGalleryImage(this)"
+                                 class="btn btn-danger">
+                                <i class="fas fa-trash-alt">
+                                </i>
+                                </button>
+</div>
+
+                                  </div>
+                `);
+            })
+        })
+
+        function removeGalleryImage(el, galleriesId = 0) {
+            $(el).parent().parent().remove();
+            if (galleriesId != 0) {
+                let removeIds = $(`[name="removeGalleryIds"]`).val();
+                removeIds += `${galleriesId}|`
+                $(`[name="removeGalleryIds"]`).val(removeIds);
+            }
+
+        }
+
+        function loadFile(event, el_rowId) {
+            var reader = new FileReader();
+            var output = document.querySelector(`img[row_id="${el_rowId}"]`);
+            reader.onload = function () {
+                output.src = reader.result;
+            };
+            if (event.target.files[0] == undefined) {
+                output.src = "";
+                return false;
+            } else {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        };
+
+
     </script>
 @endsection
 

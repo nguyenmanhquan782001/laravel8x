@@ -1,3 +1,6 @@
+@php
+    use  Illuminate\Support\Facades\Auth ;
+@endphp
 <div class="container-fluid no-gutters">
     <div class="row">
         <div class="col-lg-12 p-0 ">
@@ -114,21 +117,19 @@
                         </li>
                     </div>
                     <div class="profile_info">
-                        @php
-                            $session_user = session("user-login" , false);
-                        @endphp
-                        @if(@$session_user['avatar'] == "" )
+
+                        @if(Auth::user()->avatar == "")
                             <img src="https://anhdep123.com/wp-content/uploads/2021/05/hinh-avatar-trang.jpg" alt="#">
                         @else
-                            <img src="{{ asset("{$session_user['avatar']}") }}" alt="#">
+                            <img src="{{ Auth::user()->avatar  }}" alt="#">
                         @endif
                         <div class="profile_info_iner">
                             <div class="profile_author_name">
-                                <p>Admin To Đùng </p>
-                                <h6 style="color: white; margin-top: 10px"> {{ $session_user['name'] }}</h6>
+                                <p>Admin </p>
+                                <h6 style="color: white; margin-top: 10px">{{ Auth::user()->name   }} </h6>
                             </div>
                             <div class="profile_info_details">
-                                <a href="{{ route("user.profile" , ['id' => $session_user['id']]) }}">My Profile </a>
+                                <a href="{{ route("user.profile" , ['id'=> Auth::id()]) }}">My Profile </a>
                                 <a href="#">Settings</a>
                                 <a href="{{ route('logout') }}">Log Out </a>
                             </div>

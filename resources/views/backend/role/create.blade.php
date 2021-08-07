@@ -3,7 +3,7 @@
 @section("main_content")
     <div class="main_content_iner ">
         <div class="container-fluid p-0 sm_padding_15px">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="{{ route("role.store") }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
@@ -17,10 +17,13 @@
                             </div>
                             <div class="white_card_body">
                                 <div class="form-group mb-0">
-                                    <input value="" type="text" class="form-control" name="name" id="inputText"
+                                    <input value="{{ old("name") }}" type="text" class="form-control" name="name" id="inputText"
                                            placeholder="Vai trò mới.....">
                                 </div>
                                 <br>
+                                @if($errors->has("name"))
+                                    <h5><CODE>{{ $errors->first("name") }}</CODE></h5>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -38,9 +41,7 @@
                             <div class="white_card_body">
 
                                 <div class="form-group mb-0">
-                                    <textarea class="form-control" name="" id="" cols="30" rows="5">
-
-                                    </textarea>
+                                    <textarea class="form-control" name="desc_role" id="" cols="30" rows="5">{{old("guard_name")}}</textarea>
                                 </div>
                                 <br>
 
@@ -50,24 +51,27 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
+                        @foreach($permissions as $permission)
                         <div class="card text-white bg-warning mb-3" style="">
-                            @foreach($parent as $par)
                             <div class="card-header" style="font-size: 20px">
                                 <input type="checkbox" class="checkbox_wapper" >
-                                {{ $par->permission_name }}
+                                <label for="">{{ $permission->name }}</label>
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                @foreach($par->parentPermission as $child)
+                                    @foreach($permission->getParentId  as $item)
                                     <div class="col-3">
-                                        <input class="checkbox_child" type="checkbox" name="permission_id[]" value="{{ $child->id }}">
-                                        {{    $child->permission_name }}
+                                        <input value="{{ $item->id }}" name="permission_id[]" type="checkbox" class="checkbox_wapper">
+                                          <p>{{ $item->name }}</p>
                                     </div>
-                                @endforeach
+                                    @endforeach
+
                                 </div>
                             </div>
-                            @endforeach
+
                         </div>
+
+@endforeach
                     </div>
                 </div>
                 <a href="">

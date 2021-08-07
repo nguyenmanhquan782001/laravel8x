@@ -11,4 +11,7 @@ class ErrorController extends Controller
     public  function  Errors() {
         return view('errors.404') ;
     }
+    public function permission() {
+        return view('errors.403');
+    }
 }

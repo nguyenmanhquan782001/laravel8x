@@ -232,17 +232,41 @@
                                         </div>
                                         <div class="form-group">
                                             <section>
-
                                                 <label class="form-label">{{ $user->status == 1 ?
- "Khóa tài khoản này" : "Mở lại tài khoản này" }}</label>
+                                                          "Khóa tài khoản này" : "Mở lại tài khoản này" }}</label>
                                                 <div class="checkboxThree">
-                                                    <input {{ ($user->status == 1 ? "checked" : "") }} type="checkbox" name="status" id="checkboxThreeInput"
+                                                    <input {{ ($user->status == 1 ? "checked" : "") }} type="checkbox"
+                                                           name="status" id="checkboxThreeInput"
                                                            value="on">
                                                     <label for="checkboxThreeInput"></label>
                                                 </div>
                                             </section>
                                         </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-12">
+                                                <div class="white_card card_height_100 mb_30">
+                                                    <label for="">Chọn roles cho user</label>
+                                                    <div class="white_card_body">
+                                                        <div class="form-group mb-0">
+                                                            <div wire:ignore>
+                                                                <select name="role_id[]"
+                                                                        class="js-example-placeholder-multiple js-states form-control"
+                                                                        id="select2-dropdown" multiple="multiple"
+                                                                        autocomplete="off">
+                                                                    @foreach($roles as $role)
+                                                                        <option
+                                                                            {{ $role_active->contains('id' , $role->id) ? "selected" : "" }}
+                                                                            value="{{ $role->id }}">{{ $role->name }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                            </div>
 
+                                        </div>
                                         <div class="form-group">
                                             <label class="form-label">E-mail</label>
                                             <input disabled name="email" type="text" class="form-control mb-1"
@@ -274,8 +298,6 @@
                                                 <option>UK</option>
                                             </select>
                                         </div>
-
-
                                     </div>
                                     <hr class="border-light m-0">
                                     <div class="card-body pb-2">
@@ -307,4 +329,18 @@
     </div>
 @endsection
 @section("append_js")
+    <script>
+        $(document).ready(function () {
+            $('#select2-dropdown').select2({
+                placeholder: "Chọn quyền user",
+                allowClear: true
+            });
+            $('#select2-dropdown').on('change', function (e) {
+                let data = $('#select2-dropdown').select2("val");
+                this.set('ottPlatform', data);
+            });
+        });
+
+
+    </script>
 @endsection

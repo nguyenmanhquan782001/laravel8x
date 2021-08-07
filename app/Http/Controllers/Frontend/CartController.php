@@ -36,9 +36,6 @@ class CartController extends Controller
         $carts = session()->get("cart");
         return view("frontend.carts.carts", compact('carts'));
     }
-
-
-
     public function update(Request $request)
     {
         if ($request->id && $request->quantity) {

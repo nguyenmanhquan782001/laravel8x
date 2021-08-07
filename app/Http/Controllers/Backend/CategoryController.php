@@ -21,13 +21,16 @@ class CategoryController extends Controller
 
     public function index()
     {
+
         try {
             DB::beginTransaction();
             $categories = $this->categoryModel->all();
             DB::commit();
-            return view('backend.category.index', compact('categories'));
-
-
+            if (auth()->user()->hasPermissionTo("Danh sách danh mục")) {
+                return view('backend.category.index', compact('categories'));
+            } else {
+                return redirect()->route('403');
+            }
         } catch (\Exception $exception) {
             DB::rollBack();
             return redirect()->route('404');
@@ -48,12 +51,18 @@ class CategoryController extends Controller
             DB::beginTransaction();
             $categories = $this->getCategory('');
             DB::commit();
-            return view('backend.category.create', compact('categories'));
+            if (auth()->user()->hasPermissionTo("Thêm mới danh mục")){
+                return view('backend.category.create', compact('categories'));
+            }else{
+                return redirect()->route('403');
+            }
+
         } catch (\Exception $exception) {
             DB::rollBack();
             return redirect()->route('404');
         }
     }
+
     public function store(Request $request)
     {
         try {
@@ -105,7 +114,12 @@ class CategoryController extends Controller
             $category = $this->categoryModel->find($id);
             $categories = $this->getCategory($category->parent_id);
             DB::commit();
-            return view("backend.category.edit", compact('category', 'categories'));
+            if (auth()->user()->hasPermissionTo("Sửa danh mục")){
+                return view("backend.category.edit", compact('category', 'categories'));
+            }else{
+                return  redirect()->route("403");
+            }
+
         } catch (\Exception $exception) {
             DB::rollBack();
             return redirect()->route('404');
@@ -135,7 +149,7 @@ class CategoryController extends Controller
                 $category = $this->categoryModel->find($id);
                 $category->category_name = $category_name;
                 $category->slug = $slug;
-                $category->parent_id = $parent_id ;
+                $category->parent_id = $parent_id;
                 if ($request->input('status') === "on") {
                     $category->status = 1;
 
@@ -157,9 +171,9 @@ class CategoryController extends Controller
         $category = $this->categoryModel->find($id);
         $category->delete();
         return response()->json([
-            'code' => '200' ,
+            'code' => '200',
             'message' => 'success'
-        ] , 200) ;
+        ], 200);
 
     }
 }

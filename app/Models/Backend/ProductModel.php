@@ -31,5 +31,8 @@ class ProductModel extends Model
             'product_id',
         'order_id');
     }
+    public  function comments() {
+        return $this->hasMany(Comment::class , "product_id")->latest();
+    }
 
 }

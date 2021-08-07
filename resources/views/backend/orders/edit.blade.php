@@ -5,7 +5,7 @@
         @if(session('success'))
         @endif
         <div class="container-fluid p-0 sm_padding_15px">
-            <form action="{" method="post">
+            <form action="{{ route('order.update' , ['id' => $order->id]) }}" method="post">
                 @csrf
                 <div class="row justify-content-center">
                     <div class="col-lg-4">
@@ -42,7 +42,7 @@
                             </div>
                             <div class="white_card_body">
                                 <div class="form-group mb-0">
-                                    <input value="{{ old("customer_email" , "") }}" type="text" class="form-control"
+                                    <input value="{{ $order->customer_email }}" type="text" class="form-control"
                                            name="customer_email"
                                            id="inputText" placeholder="Email khách hàng....">
                                 </div>
@@ -65,7 +65,7 @@
                             </div>
                             <div class="white_card_body">
                                 <div class="form-group mb-0">
-                                    <input value="{{ old("customer_phone" , "") }}" type="text" class="form-control"
+                                    <input value="{{ $order->customer_phone }}" type="text" class="form-control"
                                            name="customer_phone"
                                            id="inputText" placeholder="Số điện thoại khách hàng.....">
                                 </div>
@@ -91,26 +91,26 @@
                             <div class="white_card_body">
                                 <div class="form-group mb-0">
                                     <select name="order_status" id="status_order" class="form-control">
-                                        <option value="1" {{ old('order_status', "") == 1 ? "selected" : "" }}>Đang chờ
+                                        <option value="1" {{ $order->order_status == 1 ? "selected" : "" }}>Đang chờ
                                             xác nhận
                                         </option>
 
-                                        <option value="2" {{ old('order_status', "") == 2 ? "selected" : "" }}>Đã xác
+                                        <option value="2" {{ $order->order_status == 2 ? "selected" : "" }}>Đã xác
                                             nhận
                                         </option>
 
-                                        <option value="3" {{ old('order_status', "") == 3 ? "selected" : "" }}>Đang vận
+                                        <option value="3" {{ $order->order_status == 3 ? "selected" : "" }}>Đang vận
                                             chuyển
                                         </option>
 
-                                        <option value="4" {{ old('order_status', "") == 4 ? "selected" : "" }}>Hoàn
+                                        <option value="4" {{ $order->order_status == 4 ? "selected" : "" }}>Hoàn
                                             tất
                                         </option>
 
-                                        <option value="5" {{ old('order_status', "") == 5 ? "selected" : "" }}>Đơn hủy
+                                        <option value="5" {{ $order->order_status == 5 ? "selected" : "" }}>Đơn hủy
                                         </option>
 
-                                        <option value="6" {{ old('order_status', "") == 6 ? "selected" : "" }}>Đã hoàn
+                                        <option value="6" {{ $order->order_status == 6 ? "selected" : "" }}>Đã hoàn
                                             tiền ( hủy đơn )
                                         </option>
 
@@ -132,7 +132,7 @@
                             </div>
                             <div class="white_card_body">
                                 <div class="form-group mb-0">
-                                    <input value="{{ old("customer_address" , "") }}" type="text"
+                                    <input value="{{ $order->customer_address }}" type="text"
                                            name="customer_address" class="form-control" placeholder="Địa chỉ giao hàng">
                                 </div>
                                 <br>
@@ -171,15 +171,35 @@
                                             <th>Số lượng</th>
                                             <th>Giá</th>
                                             <th>Tổng tiền</th>
-                                            <th>Hành động</th>
                                         </tr>
                                         </thead>
                                         <tbody id="list_cart_product">
+                                        @php
+                                        $total = 0;
+
+                                            @endphp
+                                        @foreach($order->detail as $product)
+                                             @php
+                                             @$total += $product->pivot->product_price * $product->pivot->product_quantity;
+                                                 @endphp
+                                            <tr>
+                                                <td>{{ $loop->index + 1 }}</td>
+                                                <td>{{ $product->product_name }}</td>
+                                                <td><img width="125px" src="{{ asset("$product->product_image") }}"
+                                                         alt=""></td>
+                                                <td>{{ $product->pivot->product_quantity }}</td>
+                                                <td>{{ number_format($product->pivot->product_price)    }} $</td>
+                                                <td>{{  number_format($product->pivot->product_price * $product->pivot->product_quantity )  }}
+                                                    $
+                                                </td>
+
+                                            </tr>
+                                        @endforeach
 
                                         </tbody>
                                     </table>
                                     <div>
-                                        <h6>Tổng tiền thanh toán : <i id="payment_price">
+                                        <h6>Tổng tiền thanh toán : {{ @$total  }}  $<i id="payment_price">
 
                                             </i></h6>
                                     </div>
@@ -203,7 +223,7 @@
                             <div class="white_card_body">
                                 <div class="form-group mb-0">
                                     <textarea name="order_note" id="" cols="30" rows="3" class="form-control">
-                                        {{ old("order_note" , "") }}
+                                      {{ $order->order_note }}
                                     </textarea>
                                 </div>
                                 <br>
@@ -218,7 +238,6 @@
                 </a>
                 <button type="submit" class="btn mb-3 btn-success"><i class="ti-heart f_s_14 mr-2"></i>Submit</button>
             </form>
-
         </div>
     </div>
 

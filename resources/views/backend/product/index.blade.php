@@ -41,20 +41,24 @@
                                         <div class="col-lg-6 form-group">
                                             <select name="category_id" id="" class="form-control">
                                                 <option value="">---Lọc theo danh mục ---</option>
-                                                {!! $categories !!} !}
+                                                @foreach($categories as $category)
+                                                    <option
+                                                        value="{{ $category->id }}"
+                                                        {{ $category->id == $category_id ? "selected" : "" }} >{{ $category->category_name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col-lg-6 form-group">
                                             <select name="order_by" id="" class="form-control">
-                                                <option value="">---Sắp xếp sản phẩm---</option>
-                                                <option value="1">Sắp xếp tên từ A-Z</option>
-                                                <option value="1">Sắp xếp tên từ Z-A</option>
-                                                <option value="3">Sắp xếp theo giá tăng dần</option>
-                                                <option value="">Sắp xếp theo giá giảm dần</option>
+                                                <option  value="">---Sắp xếp sản phẩm---</option>
+                                                <option {{ $order_by == 1 ? "selected"  : "" }} value="1">Sắp xếp tên từ A-Z</option>
+                                                <option {{ $order_by == 2 ? "selected"  : "" }}  value="2">Sắp xếp tên từ Z-A</option>
+                                                <option {{ $order_by == 3 ? "selected"  : "" }} value="3">Sắp xếp theo giá tăng dần</option>
+                                                <option {{ $order_by == 4 ? "selected"  : "" }} value="4">Sắp xếp theo giá giảm dần</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-6 form-group">
-                                            <input type="search" name="product_name" class="form-control" placeholder="Tìm kiếm 1 sản phẩm">
+                                            <input value="{{ $keyword }}" type="search" name="product_name" class="form-control" placeholder="Tìm kiếm 1 sản phẩm">
                                         </div>
 
 
@@ -177,6 +181,14 @@
                             }
                         },
                         error: function () {
+                            Swal.fire({
+                                title: 'Cay không :)',
+                                text: 'Bạn làm đếch gì có quyền này ! Ra chỗ khác chơi đi ',
+                                imageUrl: 'https://hedieuhanh.com/wp-content/uploads/2018/11/nhung-hinh-anh-che-hai-huoc-nhat-tren-facebook-13.jpg',
+                                imageWidth: 400,
+                                imageHeight: 200,
+                                imageAlt: 'Custom image',
+                            })
                         }
                     })
                 }
